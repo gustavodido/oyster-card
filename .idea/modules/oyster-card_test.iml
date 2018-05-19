@@ -10,6 +10,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="oyster-card_main" />
+    <orderEntry type="library" scope="PROVIDED" name="Gradle: org.projectlombok:lombok:1.16.16" level="project" />
     <orderEntry type="library" name="Gradle: info.cukes:cucumber-java:1.2.4" level="project" />
     <orderEntry type="library" name="Gradle: info.cukes:cucumber-junit:1.2.4" level="project" />
     <orderEntry type="library" name="Gradle: info.cukes:cucumber-core:1.2.4" level="project" />
