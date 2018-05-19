@@ -13,13 +13,14 @@ import static java.util.Comparator.comparing;
 
 class CalculateJourneyFareCommand {
     private final List<Fare> fares;
+    private final GetMinimumZonesCrossedQuery getMinimumZonesCrossedQuery;
 
-    CalculateJourneyFareCommand(List<Fare> fares) {
+    CalculateJourneyFareCommand(List<Fare> fares, GetMinimumZonesCrossedQuery getMinimumZonesCrossedQuery) {
         this.fares = fares;
+        this.getMinimumZonesCrossedQuery = getMinimumZonesCrossedQuery;
     }
 
     BigDecimal run(Journey journey) {
-        GetMinimumZonesCrossedQuery getMinimumZonesCrossedQuery = new GetMinimumZonesCrossedQuery();
         int minimumCrossedZones = getMinimumZonesCrossedQuery.run(journey);
 
         boolean isZoneOneCrossed = (journey.getOrigin().getZones().size() == 1 && journey.getOrigin().getZones().contains(1)) ||

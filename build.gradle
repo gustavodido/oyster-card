@@ -7,7 +7,8 @@ repositories {
 dependencies {
     compileOnly "org.projectlombok:lombok:1.16.16"
 
-    testCompile 'info.cukes:cucumber-java:1.2.4'
-    testCompile 'info.cukes:cucumber-junit:1.2.4'
+    testImplementation 'info.cukes:cucumber-java:1.2.4'
+    testImplementation 'info.cukes:cucumber-junit:1.2.4'
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-all:1.9.5'
 }
