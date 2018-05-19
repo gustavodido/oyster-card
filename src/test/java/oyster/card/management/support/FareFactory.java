@@ -9,7 +9,7 @@ import static java.util.Arrays.asList;
 import static oyster.card.management.models.TransportType.BUS;
 import static oyster.card.management.models.TransportType.TRAIN;
 
-public class FareConstants {
+public class FareFactory {
     public static Fare anywhereInZoneOne() {
         return Fare.builder()
                 .transportType(TRAIN)

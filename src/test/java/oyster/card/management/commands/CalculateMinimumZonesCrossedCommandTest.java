@@ -2,13 +2,13 @@ package oyster.card.management.commands;
 
 import org.junit.Before;
 import org.junit.Test;
-import oyster.card.management.models.Journey;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static oyster.card.management.support.StationConstants.earlsCourt;
-import static oyster.card.management.support.StationConstants.holborn;
-import static oyster.card.management.support.StationConstants.wimbledon;
+import static oyster.card.management.support.StationFactory.earlsCourt;
+import static oyster.card.management.support.StationFactory.holborn;
+import static oyster.card.management.support.StationFactory.wimbledon;
+import static oyster.card.management.support.TripFactory.newJourney;
 
 public class CalculateMinimumZonesCrossedCommandTest {
     private CalculateMinimumZonesCrossedCommand calculateMinimumZonesCrossedCommand;
@@ -19,42 +19,29 @@ public class CalculateMinimumZonesCrossedCommandTest {
     }
 
     @Test
-    public void shouldReturnOneForSameZoneTrips() {
-        int zonesCrossed = calculateMinimumZonesCrossedCommand.run(Journey.builder()
-                .origin(earlsCourt())
-                .destination(earlsCourt())
-                .build());
+    public void shouldReturnOneForSameZoneJourneys() {
+        int zonesCrossed = calculateMinimumZonesCrossedCommand.run(newJourney(earlsCourt(), earlsCourt()));
 
         assertThat(zonesCrossed, is(1));
     }
 
     @Test
-    public void shouldReturnMinimumZonesForMultipleOptionsTrips() {
-        int zonesCrossed = calculateMinimumZonesCrossedCommand.run(Journey.builder()
-                .origin(holborn())
-                .destination(earlsCourt())
-                .build());
+    public void shouldReturnMinimumZonesForMultipleOptionsJourneys() {
+        int zonesCrossed = calculateMinimumZonesCrossedCommand.run(newJourney(holborn(), earlsCourt()));
 
         assertThat(zonesCrossed, is(1));
     }
 
     @Test
     public void shouldReturnThreeZonesFromHolbornToWimbledon() {
-        int zonesCrossed = calculateMinimumZonesCrossedCommand.run(Journey.builder()
-                .origin(holborn())
-                .destination(wimbledon())
-                .build());
+        int zonesCrossed = calculateMinimumZonesCrossedCommand.run(newJourney(holborn(), wimbledon()));
 
         assertThat(zonesCrossed, is(3));
     }
 
-
     @Test
     public void shouldReturnTwoZonesFromEarlsCourtToWimbledon() {
-        int zonesCrossed = calculateMinimumZonesCrossedCommand.run(Journey.builder()
-                .origin(earlsCourt())
-                .destination(wimbledon())
-                .build());
+        int zonesCrossed = calculateMinimumZonesCrossedCommand.run(newJourney(earlsCourt(), wimbledon()));
 
         assertThat(zonesCrossed, is(2));
     }

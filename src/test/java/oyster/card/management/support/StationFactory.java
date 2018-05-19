@@ -7,7 +7,7 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 
-public class StationConstants {
+public class StationFactory {
     public static Station holborn() {
         return Station.builder().name("Holborn").zones(singletonList(1)).build();
     }
