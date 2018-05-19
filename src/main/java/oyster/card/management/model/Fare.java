@@ -9,5 +9,5 @@ public class Fare {
     private BigDecimal value;
     private int zonesCrossed;
     private boolean zoneOneCrossed;
-    private TransportType type;
+    private TransportType transportType;
 }
