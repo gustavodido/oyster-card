@@ -1,21 +1,19 @@
 package oyster.card.queries;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.runners.MockitoJUnitRunner;
 import oyster.card.support.JourneyFactory;
 import oyster.card.support.StationFactory;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static oyster.card.support.JourneyFactory.newJourney;
 
+@RunWith(MockitoJUnitRunner.class)
 public class GetMinimumZonesCrossedQueryTest {
+    @InjectMocks
     private GetMinimumZonesCrossedQuery getMinimumZonesCrossedQuery;
-
-    @Before
-    public void setUp() {
-        getMinimumZonesCrossedQuery = new GetMinimumZonesCrossedQuery();
-    }
 
     @Test
     public void sameZoneJourney_ShouldBeOneZone() {
