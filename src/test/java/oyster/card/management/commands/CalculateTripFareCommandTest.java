@@ -54,6 +54,17 @@ public class CalculateTripFareCommandTest {
     }
 
     @Test
+    public void tripBetweenHolbornAndHammersmithByTrainShouldBe_3_00() {
+        BigDecimal fare = calculateTripFareCommand.run(Trip.builder()
+                .origin(holborn())
+                .destination(hammersmith())
+                .transportType(TRAIN)
+                .build());
+
+        assertThat(fare, is(anyTwoZonesIncludingZoneOne().getValue()));
+    }
+
+    @Test
     public void tripBetweenWimbledonAndHammersmithByTrainShouldBe_2_25() {
         BigDecimal fare = calculateTripFareCommand.run(Trip.builder()
                 .origin(wimbledon())
@@ -62,17 +73,6 @@ public class CalculateTripFareCommandTest {
                 .build());
 
         assertThat(fare, is(anyTwoZonesExcludingZoneOne().getValue()));
-    }
-
-    @Test
-    public void tripBetweenHolbornAndHammersmithByBusShouldBe_3_00() {
-        BigDecimal fare = calculateTripFareCommand.run(Trip.builder()
-                .origin(holborn())
-                .destination(hammersmith())
-                .transportType(TRAIN)
-                .build());
-
-        assertThat(fare, is(anyTwoZonesIncludingZoneOne().getValue()));
     }
 
 
@@ -97,6 +97,4 @@ public class CalculateTripFareCommandTest {
 
         assertThat(fare, is(anyBusJourney().getValue()));
     }
-
-
 }

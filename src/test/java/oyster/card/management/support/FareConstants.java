@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static java.util.Arrays.asList;
-import static java.util.Collections.singletonList;
 import static oyster.card.management.models.TransportType.BUS;
 import static oyster.card.management.models.TransportType.TRAIN;
 
@@ -15,6 +14,7 @@ public class FareConstants {
         return Fare.builder()
                 .transportType(TRAIN)
                 .zonesCrossed(1)
+                .canIncludeZoneOne(true)
                 .value(new BigDecimal(2.50)).build();
     }
 
@@ -22,7 +22,7 @@ public class FareConstants {
         return Fare.builder()
                 .transportType(TRAIN)
                 .zonesCrossed(1)
-                .excludingZones(singletonList(1))
+                .canIncludeZoneOne(false)
                 .value(new BigDecimal(2.00)).build();
     }
 
@@ -30,6 +30,7 @@ public class FareConstants {
         return Fare.builder()
                 .transportType(TRAIN)
                 .zonesCrossed(2)
+                .canIncludeZoneOne(true)
                 .value(new BigDecimal(3.00))
                 .build();
     }
@@ -38,7 +39,7 @@ public class FareConstants {
         return Fare.builder()
                 .transportType(TRAIN)
                 .zonesCrossed(2)
-                .excludingZones(singletonList(1))
+                .canIncludeZoneOne(false)
                 .value(new BigDecimal(2.25))
                 .build();
     }
@@ -47,6 +48,7 @@ public class FareConstants {
         return Fare.builder()
                 .transportType(TRAIN)
                 .zonesCrossed(3)
+                .canIncludeZoneOne(true)
                 .value(new BigDecimal(3.20))
                 .build();
     }
@@ -54,6 +56,7 @@ public class FareConstants {
     public static Fare anyBusJourney() {
         return Fare.builder()
                 .transportType(BUS)
+                .canIncludeZoneOne(true)
                 .value(new BigDecimal(1.80))
                 .build();
     }
