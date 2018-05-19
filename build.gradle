@@ -9,8 +9,3 @@ dependencies {
     testCompile 'info.cukes:cucumber-junit:1.2.4'
     testImplementation 'junit:junit:4.12'
 }
-
-test {
-    testLogging.showStandardStreams = true
-    systemProperties System.getProperties()
-}
