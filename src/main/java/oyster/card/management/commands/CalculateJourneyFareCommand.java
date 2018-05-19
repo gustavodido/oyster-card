@@ -3,6 +3,7 @@ package oyster.card.management.commands;
 import oyster.card.management.models.Fare;
 import oyster.card.management.models.TransportType;
 import oyster.card.management.models.Journey;
+import oyster.card.management.queries.GetMinimumZonesCrossedQuery;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -18,8 +19,8 @@ class CalculateJourneyFareCommand {
     }
 
     BigDecimal run(Journey journey) {
-        CalculateMinimumZonesCrossedCommand calculateMinimumZonesCrossedCommand = new CalculateMinimumZonesCrossedCommand();
-        int minimumCrossedZones = calculateMinimumZonesCrossedCommand.run(journey);
+        GetMinimumZonesCrossedQuery getMinimumZonesCrossedQuery = new GetMinimumZonesCrossedQuery();
+        int minimumCrossedZones = getMinimumZonesCrossedQuery.run(journey);
 
         boolean isZoneOneCrossed = (journey.getOrigin().getZones().size() == 1 && journey.getOrigin().getZones().contains(1)) ||
                 (journey.getDestination().getZones().size() == 1 && journey.getDestination().getZones().contains(1));

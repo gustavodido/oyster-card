@@ -1,4 +1,4 @@
-package oyster.card.management.commands;
+package oyster.card.management.queries;
 
 import oyster.card.management.models.Journey;
 
@@ -8,8 +8,8 @@ import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Math.abs;
 import static java.lang.Math.min;
 
-class CalculateMinimumZonesCrossedCommand {
-    int run(Journey journey) {
+public class GetMinimumZonesCrossedQuery {
+    public int run(Journey journey) {
         List<Integer> originZones = journey.getOrigin().getZones();
         List<Integer> destinationZones = journey.getDestination().getZones();
 
