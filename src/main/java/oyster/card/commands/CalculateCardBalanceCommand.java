@@ -1,8 +1,8 @@
-package oyster.card.management.commands;
+package oyster.card.commands;
 
-import oyster.card.management.models.Fare;
-import oyster.card.management.models.Journey;
-import oyster.card.management.models.Station;
+import oyster.card.models.Fare;
+import oyster.card.models.Journey;
+import oyster.card.models.Station;
 
 import java.math.BigDecimal;
 import java.util.List;

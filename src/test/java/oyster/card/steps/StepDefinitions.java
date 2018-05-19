@@ -1,4 +1,4 @@
-package oyster.card.management.steps;
+package oyster.card.steps;
 
 import cucumber.api.java.en.Given;
 import org.junit.Assert;

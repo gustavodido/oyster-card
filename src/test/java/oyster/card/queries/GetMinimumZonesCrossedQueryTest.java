@@ -1,14 +1,13 @@
-package oyster.card.management.queries;
+package oyster.card.queries;
 
 import org.junit.Before;
 import org.junit.Test;
+import oyster.card.support.JourneyFactory;
+import oyster.card.support.StationFactory;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static oyster.card.management.support.StationFactory.earlsCourt;
-import static oyster.card.management.support.StationFactory.holborn;
-import static oyster.card.management.support.StationFactory.wimbledon;
-import static oyster.card.management.support.JourneyFactory.newJourney;
+import static oyster.card.support.JourneyFactory.newJourney;
 
 public class GetMinimumZonesCrossedQueryTest {
     private GetMinimumZonesCrossedQuery getMinimumZonesCrossedQuery;
@@ -20,28 +19,28 @@ public class GetMinimumZonesCrossedQueryTest {
 
     @Test
     public void sameZoneJourney_ShouldBeOneZone() {
-        int zonesCrossed = getMinimumZonesCrossedQuery.run(newJourney(earlsCourt(), earlsCourt()));
+        int zonesCrossed = getMinimumZonesCrossedQuery.run(JourneyFactory.newJourney(StationFactory.earlsCourt(), StationFactory.earlsCourt()));
 
         assertThat(zonesCrossed, is(1));
     }
 
     @Test
     public void multipleOptionsJourney_ShouldBeTheMinimumPossible() {
-        int zonesCrossed = getMinimumZonesCrossedQuery.run(newJourney(holborn(), earlsCourt()));
+        int zonesCrossed = getMinimumZonesCrossedQuery.run(JourneyFactory.newJourney(StationFactory.holborn(), StationFactory.earlsCourt()));
 
         assertThat(zonesCrossed, is(1));
     }
 
     @Test
     public void fromHolbornToWimbledon_ShouldBeAllThreeZones() {
-        int zonesCrossed = getMinimumZonesCrossedQuery.run(newJourney(holborn(), wimbledon()));
+        int zonesCrossed = getMinimumZonesCrossedQuery.run(JourneyFactory.newJourney(StationFactory.holborn(), StationFactory.wimbledon()));
 
         assertThat(zonesCrossed, is(3));
     }
 
     @Test
     public void fromEarlsCourtToWimbledon_ShouldBeTwoZones() {
-        int zonesCrossed = getMinimumZonesCrossedQuery.run(newJourney(earlsCourt(), wimbledon()));
+        int zonesCrossed = getMinimumZonesCrossedQuery.run(JourneyFactory.newJourney(StationFactory.earlsCourt(), StationFactory.wimbledon()));
 
         assertThat(zonesCrossed, is(2));
     }

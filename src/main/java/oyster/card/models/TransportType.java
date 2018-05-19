@@ -1,4 +1,4 @@
-package oyster.card.management.models;
+package oyster.card.models;
 
 public enum TransportType {
     BUS, TRAIN

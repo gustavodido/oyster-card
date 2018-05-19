@@ -1,6 +1,6 @@
-package oyster.card.management.support;
+package oyster.card.support;
 
-import oyster.card.management.models.Station;
+import oyster.card.models.Station;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
-package oyster.card.management.queries;
+package oyster.card.queries;
 
-import oyster.card.management.models.Journey;
+import oyster.card.models.Journey;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package oyster.card.management;
+package oyster.card;
 
 import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;

@@ -1,18 +1,17 @@
-package oyster.card.management.support;
+package oyster.card.support;
 
-import oyster.card.management.models.Fare;
+import oyster.card.models.Fare;
+import oyster.card.models.TransportType;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 import static java.util.Arrays.asList;
-import static oyster.card.management.models.TransportType.BUS;
-import static oyster.card.management.models.TransportType.TRAIN;
 
 public class FareFactory {
     public static Fare anywhereInZoneOne() {
         return Fare.builder()
-                .transportType(TRAIN)
+                .transportType(TransportType.TRAIN)
                 .zonesCrossed(1)
                 .canIncludeZoneOne(true)
                 .value(new BigDecimal(2.50)).build();
@@ -20,7 +19,7 @@ public class FareFactory {
 
     public static Fare anyOneZoneOutsideZoneOne() {
         return Fare.builder()
-                .transportType(TRAIN)
+                .transportType(TransportType.TRAIN)
                 .zonesCrossed(1)
                 .canIncludeZoneOne(false)
                 .value(new BigDecimal(2.00)).build();
@@ -28,7 +27,7 @@ public class FareFactory {
 
     public static Fare anyTwoZonesIncludingZoneOne() {
         return Fare.builder()
-                .transportType(TRAIN)
+                .transportType(TransportType.TRAIN)
                 .zonesCrossed(2)
                 .canIncludeZoneOne(true)
                 .value(new BigDecimal(3.00))
@@ -37,7 +36,7 @@ public class FareFactory {
 
     public static Fare anyTwoZonesExcludingZoneOne() {
         return Fare.builder()
-                .transportType(TRAIN)
+                .transportType(TransportType.TRAIN)
                 .zonesCrossed(2)
                 .canIncludeZoneOne(false)
                 .value(new BigDecimal(2.25))
@@ -46,7 +45,7 @@ public class FareFactory {
 
     public static Fare anyThreeZones() {
         return Fare.builder()
-                .transportType(TRAIN)
+                .transportType(TransportType.TRAIN)
                 .zonesCrossed(3)
                 .canIncludeZoneOne(true)
                 .value(new BigDecimal(3.20))
@@ -55,7 +54,7 @@ public class FareFactory {
 
     public static Fare anyBusJourney() {
         return Fare.builder()
-                .transportType(BUS)
+                .transportType(TransportType.BUS)
                 .canIncludeZoneOne(true)
                 .value(new BigDecimal(1.80))
                 .build();

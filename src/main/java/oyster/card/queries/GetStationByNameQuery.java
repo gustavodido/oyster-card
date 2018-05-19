@@ -1,7 +1,7 @@
-package oyster.card.management.queries;
+package oyster.card.queries;
 
-import oyster.card.management.exceptions.InvalidStationNameException;
-import oyster.card.management.models.Station;
+import oyster.card.exceptions.InvalidStationNameException;
+import oyster.card.models.Station;
 
 import java.util.List;
 

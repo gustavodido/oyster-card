@@ -1,4 +1,4 @@
-package oyster.card.management.exceptions;
+package oyster.card.exceptions;
 
 import static java.lang.String.format;
 
