@@ -18,13 +18,13 @@ public class GetStationByNameQueryTest {
         getStationByNameQuery = new GetStationByNameQuery(singletonList(holborn()));
     }
     @Test
-    public void shouldReturnStationByName() {
+    public void queryByName_ShouldReturnStation() {
         Station expectedStation = getStationByNameQuery.run(holborn().getName());
         assertThat(expectedStation, is(holborn()));
     }
 
     @Test(expected = InvalidStationNameException.class)
-    public void shouldRaiseExceptionIfStationDoesNotExists() {
+    public void nonExistentName_ShouldThrowException() {
         getStationByNameQuery.run("Random station name...");
     }
 }

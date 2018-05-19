@@ -4,7 +4,7 @@ import oyster.card.management.models.Journey;
 import oyster.card.management.models.Station;
 import oyster.card.management.models.TransportType;
 
-public class TripFactory {
+public class JourneyFactory {
     public static Journey newJourney(Station origin, Station destination, TransportType transportType) {
         return Journey.builder()
                 .origin(origin)

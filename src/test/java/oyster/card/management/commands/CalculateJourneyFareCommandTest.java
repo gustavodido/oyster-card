@@ -26,7 +26,7 @@ import static oyster.card.management.support.StationFactory.earlsCourt;
 import static oyster.card.management.support.StationFactory.hammersmith;
 import static oyster.card.management.support.StationFactory.holborn;
 import static oyster.card.management.support.StationFactory.wimbledon;
-import static oyster.card.management.support.TripFactory.newJourney;
+import static oyster.card.management.support.JourneyFactory.newJourney;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CalculateJourneyFareCommandTest {
@@ -41,42 +41,42 @@ public class CalculateJourneyFareCommandTest {
     }
 
     @Test
-    public void tripBetweenHolbornAndEarlsCourtByTrainShouldBe_2_50() {
+    public void fromHolbornToEarlsCourtByTrain_ShouldBeInZoneOne() {
         BigDecimal actualFare = calculateJourneyFareForCrossedZones(newJourney(holborn(), earlsCourt(), TRAIN), 1);
 
         assertThat(actualFare, is(anywhereInZoneOne().getValue()));
     }
 
     @Test
-    public void tripBetweenEarlsCourtAndHammersmithByTrainShouldBe_2_00() {
+    public void fromEarlsCourtToHammersmithByTrain_ShouldBeOneZoneExcludingZoneOne() {
         BigDecimal actualFare = calculateJourneyFareForCrossedZones(newJourney(earlsCourt(), hammersmith(), TRAIN), 1);
 
         assertThat(actualFare, is(anyOneZoneOutsideZoneOne().getValue()));
     }
 
     @Test
-    public void tripBetweenHolbornAndHammersmithByTrainShouldBe_3_00() {
+    public void fromHolbornToHammersmithByTrain_ShouldBeTwoZones() {
         BigDecimal actualFare = calculateJourneyFareForCrossedZones(newJourney(holborn(), hammersmith(), TRAIN), 2);
 
         assertThat(actualFare, is(anyTwoZonesIncludingZoneOne().getValue()));
     }
 
     @Test
-    public void tripBetweenWimbledonAndHammersmithByTrainShouldBe_2_25() {
+    public void fromWimbledonToHammersmithByTrain_ShouldBeTwoZonesExcludingZoneOne() {
         BigDecimal actualFare = calculateJourneyFareForCrossedZones(newJourney(wimbledon(), hammersmith(), TRAIN), 2);
 
         assertThat(actualFare, is(anyTwoZonesExcludingZoneOne().getValue()));
     }
 
     @Test
-    public void tripBetweenHolbornAndWimbledomByTrainShouldBe_3_20() {
+    public void fromHolbornToWimbledomByTrain_ShouldBeThreeZones() {
         BigDecimal actualFare = calculateJourneyFareForCrossedZones(newJourney(holborn(), wimbledon(), TRAIN), 3);
 
         assertThat(actualFare, is(anyThreeZones().getValue()));
     }
 
     @Test
-    public void tripBetweenHolbornAndWimbledonByBusShouldBe_1_80() {
+    public void fromHolbornToWimbledonByBus_ShouldBeBusJourney() {
         BigDecimal actualFare = calculateJourneyFareForCrossedZones(newJourney(holborn(), wimbledon(), BUS), 3);
 
         assertThat(actualFare, is(anyBusJourney().getValue()));
