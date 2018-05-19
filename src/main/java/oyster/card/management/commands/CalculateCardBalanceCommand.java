@@ -1,7 +1,7 @@
 package oyster.card.management.commands;
 
 import oyster.card.management.models.Fare;
-import oyster.card.management.models.Trip;
+import oyster.card.management.models.Journey;
 import oyster.card.management.models.Station;
 
 import java.math.BigDecimal;
@@ -16,7 +16,7 @@ public class CalculateCardBalanceCommand {
         this.fares = fares;
     }
 
-    public BigDecimal run(BigDecimal cardBalance, List<Trip> trips) {
+    public BigDecimal run(BigDecimal cardBalance, List<Journey> journeys) {
         return BigDecimal.ONE;
     }
 }

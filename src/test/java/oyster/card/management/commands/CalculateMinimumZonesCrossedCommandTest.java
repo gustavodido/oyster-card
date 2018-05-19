@@ -2,7 +2,7 @@ package oyster.card.management.commands;
 
 import org.junit.Before;
 import org.junit.Test;
-import oyster.card.management.models.Trip;
+import oyster.card.management.models.Journey;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -20,7 +20,7 @@ public class CalculateMinimumZonesCrossedCommandTest {
 
     @Test
     public void shouldReturnOneForSameZoneTrips() {
-        int zonesCrossed = calculateMinimumZonesCrossedCommand.run(Trip.builder()
+        int zonesCrossed = calculateMinimumZonesCrossedCommand.run(Journey.builder()
                 .origin(earlsCourt())
                 .destination(earlsCourt())
                 .build());
@@ -30,7 +30,7 @@ public class CalculateMinimumZonesCrossedCommandTest {
 
     @Test
     public void shouldReturnMinimumZonesForMultipleOptionsTrips() {
-        int zonesCrossed = calculateMinimumZonesCrossedCommand.run(Trip.builder()
+        int zonesCrossed = calculateMinimumZonesCrossedCommand.run(Journey.builder()
                 .origin(holborn())
                 .destination(earlsCourt())
                 .build());
@@ -40,7 +40,7 @@ public class CalculateMinimumZonesCrossedCommandTest {
 
     @Test
     public void shouldReturnThreeZonesFromHolbornToWimbledon() {
-        int zonesCrossed = calculateMinimumZonesCrossedCommand.run(Trip.builder()
+        int zonesCrossed = calculateMinimumZonesCrossedCommand.run(Journey.builder()
                 .origin(holborn())
                 .destination(wimbledon())
                 .build());
@@ -51,7 +51,7 @@ public class CalculateMinimumZonesCrossedCommandTest {
 
     @Test
     public void shouldReturnTwoZonesFromEarlsCourtToWimbledon() {
-        int zonesCrossed = calculateMinimumZonesCrossedCommand.run(Trip.builder()
+        int zonesCrossed = calculateMinimumZonesCrossedCommand.run(Journey.builder()
                 .origin(earlsCourt())
                 .destination(wimbledon())
                 .build());

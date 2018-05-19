@@ -2,7 +2,7 @@ package oyster.card.management.commands;
 
 import oyster.card.management.models.Fare;
 import oyster.card.management.models.TransportType;
-import oyster.card.management.models.Trip;
+import oyster.card.management.models.Journey;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -10,26 +10,26 @@ import java.util.Optional;
 
 import static java.util.Comparator.comparing;
 
-class CalculateTripFareCommand {
+class CalculateJourneyFareCommand {
     private final List<Fare> fares;
 
-    CalculateTripFareCommand(List<Fare> fares) {
+    CalculateJourneyFareCommand(List<Fare> fares) {
         this.fares = fares;
     }
 
-    BigDecimal run(Trip trip) {
+    BigDecimal run(Journey journey) {
         CalculateMinimumZonesCrossedCommand calculateMinimumZonesCrossedCommand = new CalculateMinimumZonesCrossedCommand();
-        int minimumCrossedZones = calculateMinimumZonesCrossedCommand.run(trip);
+        int minimumCrossedZones = calculateMinimumZonesCrossedCommand.run(journey);
 
-        boolean isZoneOneCrossed = (trip.getOrigin().getZones().size() == 1 && trip.getOrigin().getZones().contains(1)) ||
-                (trip.getDestination().getZones().size() == 1 && trip.getDestination().getZones().contains(1));
+        boolean isZoneOneCrossed = (journey.getOrigin().getZones().size() == 1 && journey.getOrigin().getZones().contains(1)) ||
+                (journey.getDestination().getZones().size() == 1 && journey.getDestination().getZones().contains(1));
 
         Optional<Fare> minimumFare = fares.stream().filter(f ->
-                (trip.getTransportType() == TransportType.BUS && f.getTransportType() == trip.getTransportType())
+                (journey.getTransportType() == TransportType.BUS && f.getTransportType() == journey.getTransportType())
                 || (
                 f.getZonesCrossed() == minimumCrossedZones
                 && f.isCanIncludeZoneOne() == isZoneOneCrossed
-                && f.getTransportType() == trip.getTransportType()))
+                && f.getTransportType() == journey.getTransportType()))
                 .min(comparing(Fare::getValue));
 
         return minimumFare.get().getValue();
