@@ -1,7 +1,6 @@
 package oyster.card.commands;
 
 import oyster.card.models.Fare;
-import oyster.card.models.TransportType;
 import oyster.card.models.Journey;
 import oyster.card.queries.GetMinimumZonesCrossedQuery;
 import oyster.card.queries.IsZoneOneCrossedQuery;
@@ -9,8 +8,10 @@ import oyster.card.queries.IsZoneOneCrossedQuery;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import static java.util.Comparator.comparing;
+import static oyster.card.models.TransportType.BUS;
 
 class CalculateJourneyFareCommand {
     private final List<Fare> fares;
@@ -27,12 +28,16 @@ class CalculateJourneyFareCommand {
         int minimumCrossedZones = getMinimumZonesCrossedQuery.run(journey);
         boolean isZoneOneCrossed = isZoneOneCrossedQuery.run(journey);
 
-        Optional<Fare> minimumFare = fares.stream().filter(f ->
-                (journey.getTransportType() == TransportType.BUS && f.getTransportType() == journey.getTransportType())
-                || (
-                f.getZonesCrossed() == minimumCrossedZones
-                && f.isCanIncludeZoneOne() == isZoneOneCrossed
-                && f.getTransportType() == journey.getTransportType()))
+        Predicate<Fare> busTransport = f ->  journey.getTransportType() == BUS && f.getTransportType() == BUS;
+        Predicate<Fare> zonesCrossed = f -> f.getZonesCrossed() == minimumCrossedZones;
+        Predicate<Fare> isZoneOneAllowed = f -> f.isCanIncludeZoneOne() == isZoneOneCrossed;
+        Predicate<Fare> transportType = f -> f.getTransportType() == journey.getTransportType();
+
+        Predicate<Fare> faresFilter =
+                busTransport.or(zonesCrossed.and(isZoneOneAllowed).and(transportType));
+
+        Optional<Fare> minimumFare = fares.stream()
+                .filter(faresFilter)
                 .min(comparing(Fare::getValue));
 
         return minimumFare.get().getValue();
