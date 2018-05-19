@@ -1,4 +1,4 @@
-package oyster.card.management.model;
+package oyster.card.management.models;
 
 import lombok.Value;
 
