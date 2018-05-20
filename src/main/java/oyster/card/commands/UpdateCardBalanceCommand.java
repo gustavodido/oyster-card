@@ -7,11 +7,10 @@ import java.math.BigDecimal;
 
 import static java.math.BigDecimal.ZERO;
 
-public class LoadCardCommand {
+public class UpdateCardBalanceCommand {
     private final CardRepository cardRepository;
 
-    public LoadCardCommand(CardRepository cardRepository) {
-
+    public UpdateCardBalanceCommand(CardRepository cardRepository) {
         this.cardRepository = cardRepository;
     }
 

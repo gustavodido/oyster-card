@@ -18,18 +18,18 @@ import static org.mockito.Mockito.when;
 import static oyster.card.support.CardFactory.gustavoCard;
 
 @RunWith(MockitoJUnitRunner.class)
-public class LoadCardCommandTest {
+public class UpdateCardBalanceCommandTest {
     @Mock
     private CardRepository cardRepository;
 
     @InjectMocks
-    private LoadCardCommand loadCardCommand;
+    private UpdateCardBalanceCommand updateCardBalanceCommand;
 
     @Test
     public void loadAmountInNewCard_ShouldCreateCard() {
         when(cardRepository.get(gustavoCard().getUserName())).thenReturn(empty());
 
-        Card card = loadCardCommand.run(gustavoCard().getUserName(), gustavoCard().getBalance());
+        Card card = updateCardBalanceCommand.run(gustavoCard().getUserName(), gustavoCard().getBalance());
 
         assertThat(card, is(gustavoCard()));
     }
@@ -38,7 +38,7 @@ public class LoadCardCommandTest {
     public void loadAmountInExistingCard_ShouldUpdateBalance() {
         when(cardRepository.get(gustavoCard().getUserName())).thenReturn(of(gustavoCard()));
 
-        Card card = loadCardCommand.run(gustavoCard().getUserName(), gustavoCard().getBalance());
+        Card card = updateCardBalanceCommand.run(gustavoCard().getUserName(), gustavoCard().getBalance());
 
         BigDecimal expectedBalance = gustavoCard().getBalance().multiply(new BigDecimal(2));
 

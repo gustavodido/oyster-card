@@ -4,7 +4,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import oyster.card.commands.LoadCardCommand;
+import oyster.card.commands.UpdateCardBalanceCommand;
 import oyster.card.models.Journey;
 import oyster.card.models.Journey.JourneyBuilder;
 import oyster.card.queries.GetCardBalanceByUserNameQuery;
@@ -25,14 +25,14 @@ public class StepDefinitions {
 
     private final InMemoryCardRepository inMemoryCardRepository = new InMemoryCardRepository();
 
-    private final LoadCardCommand loadCardCommand = new LoadCardCommand(inMemoryCardRepository);
+    private final UpdateCardBalanceCommand updateCardBalanceCommand = new UpdateCardBalanceCommand(inMemoryCardRepository);
 
     private final GetStationByNameQuery getStationByNameQuery = new GetStationByNameQuery(new InMemoryStationRepository());
     private final GetCardBalanceByUserNameQuery getCardBalanceByUserNameQuery = new GetCardBalanceByUserNameQuery(inMemoryCardRepository);
 
     @Given("^the user (.*?) has loaded £(\\d+.\\d+) in his card$")
     public void theUserGustavoHasLoadedSomAmountInHisCard(String userName, BigDecimal amount) throws Throwable {
-        loadCardCommand.run(userName, amount);
+        updateCardBalanceCommand.run(userName, amount);
         this.userName = userName;
     }
 
