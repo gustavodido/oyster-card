@@ -1,20 +1,19 @@
 package queries;
 
 import exceptions.CardNotFoundException;
-import repositories.CardRepository;
-import support.CardFactory;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
+import repositories.CardRepository;
+import support.CardFactory;
 
 import java.math.BigDecimal;
 
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 

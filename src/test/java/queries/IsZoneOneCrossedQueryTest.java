@@ -1,15 +1,14 @@
 package queries;
 
-import support.JourneyFactory;
-import support.StationFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
+import support.JourneyFactory;
+import support.StationFactory;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static support.JourneyFactory.newJourney;
 
 @RunWith(MockitoJUnitRunner.class)
 public class IsZoneOneCrossedQueryTest {

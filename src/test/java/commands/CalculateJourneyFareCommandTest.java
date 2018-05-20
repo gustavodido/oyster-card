@@ -2,26 +2,25 @@ package commands;
 
 import exceptions.NoAvailableFareForJourneyException;
 import models.Journey;
-import repositories.FareRepository;
-import support.FareFactory;
-import support.JourneyFactory;
-import support.StationFactory;
+import models.TransportType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import models.TransportType;
+import org.mockito.junit.MockitoJUnitRunner;
 import queries.GetMinimumZonesCrossedQuery;
 import queries.IsZoneOneCrossedQuery;
+import repositories.FareRepository;
+import support.FareFactory;
+import support.JourneyFactory;
+import support.StationFactory;
 
 import java.math.BigDecimal;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
-import static support.JourneyFactory.newJourney;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CalculateJourneyFareCommandTest {
