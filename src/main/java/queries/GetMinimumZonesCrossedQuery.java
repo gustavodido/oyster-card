@@ -18,6 +18,11 @@ public class GetMinimumZonesCrossedQuery {
             for (int toZone: destinationZones) {
                 int zonesCrossed = abs(fromZone - toZone) + 1;
                 minimumZonesCrossed = min(minimumZonesCrossed, zonesCrossed);
+
+                // Break the nested loops, one zone is the best scenario
+                if (minimumZonesCrossed == 1) {
+                    return 1;
+                }
             }
         }
 
