@@ -10,7 +10,7 @@ import java.util.Optional;
 import static java.util.Optional.ofNullable;
 
 public class InMemoryCardRepository implements CardRepository {
-    private static Map<String, Card> cards = new HashMap<>();
+    private final static Map<String, Card> cards = new HashMap<>();
 
     @Override
     public void save(Card card) {

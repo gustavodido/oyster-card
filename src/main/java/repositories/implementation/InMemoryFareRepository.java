@@ -10,7 +10,7 @@ import java.util.List;
 import static java.util.Arrays.asList;
 
 public class InMemoryFareRepository implements FareRepository {
-    private static List<Fare> fares = asList(
+    private final static List<Fare> fares = asList(
             Fare.builder()
                     .transportType(TransportType.TRAIN)
                     .zonesCrossed(1)

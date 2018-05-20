@@ -10,7 +10,7 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 
 public class InMemoryStationRepository implements StationRepository {
-    private static List<Station> stations =
+    private final static List<Station> stations =
             asList(
                     Station.builder().name("Holborn").zones(singletonList(1)).build(),
                     Station.builder().name("Earl's Court").zones(asList(1, 2)).build(),

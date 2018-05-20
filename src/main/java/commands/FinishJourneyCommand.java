@@ -2,7 +2,6 @@ package commands;
 
 import models.Journey;
 import queries.GetMaximumFareQuery;
-import repositories.FareRepository;
 
 import java.math.BigDecimal;
 
@@ -11,7 +10,9 @@ public class FinishJourneyCommand {
     private final UpdateCardBalanceCommand updateCardBalanceCommand;
     private final GetMaximumFareQuery getMaximumFareQuery;
 
-    public FinishJourneyCommand(CalculateJourneyFareCommand calculateJourneyFareCommand, UpdateCardBalanceCommand updateCardBalanceCommand, GetMaximumFareQuery getMaximumFareQuery, FareRepository fareRepository) {
+    public FinishJourneyCommand(CalculateJourneyFareCommand calculateJourneyFareCommand,
+                                UpdateCardBalanceCommand updateCardBalanceCommand,
+                                GetMaximumFareQuery getMaximumFareQuery) {
         this.calculateJourneyFareCommand = calculateJourneyFareCommand;
         this.updateCardBalanceCommand = updateCardBalanceCommand;
         this.getMaximumFareQuery = getMaximumFareQuery;
