@@ -13,6 +13,7 @@ import queries.GetStationByNameQuery;
 import queries.IsZoneOneCrossedQuery;
 import repositories.CardRepository;
 import repositories.FareRepository;
+import repositories.StationRepository;
 import repositories.implementation.InMemoryCardRepository;
 import repositories.implementation.InMemoryFareRepository;
 import repositories.implementation.InMemoryStationRepository;
@@ -31,8 +32,9 @@ class OysterCardSystem {
 
     private final CardRepository inMemoryCardRepository = new InMemoryCardRepository();
     private final FareRepository inMemoryFareRepository = new InMemoryFareRepository();
+    private final StationRepository inMemoryStationRepository = new InMemoryStationRepository();
 
-    private final GetStationByNameQuery getStationByNameQuery = new GetStationByNameQuery(new InMemoryStationRepository());
+    private final GetStationByNameQuery getStationByNameQuery = new GetStationByNameQuery(inMemoryStationRepository);
     private final GetCardBalanceByUserNameQuery getCardBalanceByUserNameQuery = new GetCardBalanceByUserNameQuery(inMemoryCardRepository);
     private final GetMaximumFareQuery getMaximumFareQuery = new GetMaximumFareQuery(inMemoryFareRepository);
     private final GetMinimumZonesCrossedQuery getMinimumZonesCrossedQuery = new GetMinimumZonesCrossedQuery();
@@ -52,6 +54,7 @@ class OysterCardSystem {
         journeyBuilder.origin(getStationByNameQuery.run(station));
 
         try {
+            isUserOutOfFunds = false;
             startJourneyCommand.run(userName);
         } catch (InsufficientFundsException ex) {
             isUserOutOfFunds = true;
