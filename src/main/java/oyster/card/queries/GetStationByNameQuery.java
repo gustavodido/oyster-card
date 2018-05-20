@@ -2,21 +2,18 @@ package oyster.card.queries;
 
 import oyster.card.exceptions.InvalidStationNameException;
 import oyster.card.models.Station;
-
-import java.util.List;
+import oyster.card.repositories.StationRepository;
 
 public class GetStationByNameQuery {
-    private List<Station> stations;
+    private StationRepository stationRepository;
 
-    public GetStationByNameQuery(List<Station> stations) {
-        this.stations = stations;
+    public GetStationByNameQuery(StationRepository stationRepository) {
+        this.stationRepository = stationRepository;
     }
 
     public Station run(String name) {
-        return stations
-                .stream()
-                .filter(s -> s.getName().equals(name))
-                .findFirst()
+        return stationRepository
+                .getByName(name)
                 .orElseThrow(() -> new InvalidStationNameException(name));
     }
 }

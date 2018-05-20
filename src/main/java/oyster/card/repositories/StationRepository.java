@@ -2,8 +2,9 @@ package oyster.card.repositories;
 
 import oyster.card.models.Station;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface StationRepository {
-    List<Station> list();
+    Optional<Station> getByName(String name);
+
 }
