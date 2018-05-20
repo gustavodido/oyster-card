@@ -13,7 +13,7 @@ public class FareFactory {
         return Fare.builder()
                 .transportType(TransportType.TRAIN)
                 .zonesCrossed(1)
-                .canIncludeZoneOne(true)
+                .zoneOneIncluded(true)
                 .value(new BigDecimal(2.50)).build();
     }
 
@@ -21,7 +21,7 @@ public class FareFactory {
         return Fare.builder()
                 .transportType(TransportType.TRAIN)
                 .zonesCrossed(1)
-                .canIncludeZoneOne(false)
+                .zoneOneIncluded(false)
                 .value(new BigDecimal(2.00)).build();
     }
 
@@ -29,7 +29,7 @@ public class FareFactory {
         return Fare.builder()
                 .transportType(TransportType.TRAIN)
                 .zonesCrossed(2)
-                .canIncludeZoneOne(true)
+                .zoneOneIncluded(true)
                 .value(new BigDecimal(3.00))
                 .build();
     }
@@ -38,7 +38,7 @@ public class FareFactory {
         return Fare.builder()
                 .transportType(TransportType.TRAIN)
                 .zonesCrossed(2)
-                .canIncludeZoneOne(false)
+                .zoneOneIncluded(false)
                 .value(new BigDecimal(2.25))
                 .build();
     }
@@ -47,7 +47,7 @@ public class FareFactory {
         return Fare.builder()
                 .transportType(TransportType.TRAIN)
                 .zonesCrossed(3)
-                .canIncludeZoneOne(true)
+                .zoneOneIncluded(true)
                 .value(new BigDecimal(3.20))
                 .build();
     }
@@ -55,7 +55,7 @@ public class FareFactory {
     public static Fare anyBusJourney() {
         return Fare.builder()
                 .transportType(TransportType.BUS)
-                .canIncludeZoneOne(true)
+                .zoneOneIncluded(true)
                 .value(new BigDecimal(1.80))
                 .build();
     }

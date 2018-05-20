@@ -2,8 +2,6 @@ package oyster.card.support;
 
 import oyster.card.models.Station;
 
-import java.util.List;
-
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 
@@ -24,7 +22,12 @@ public class StationFactory {
         return Station.builder().name("Hammersmith").zones(singletonList(2)).build();
     }
 
-    public static List<Station> stations() {
-        return asList(holborn(), earlsCourt(), wimbledon(), hammersmith());
+    public static Station chelsea() {
+        return Station.builder().name("Chelsea").build();
     }
+
+    public static Station invalidStation() {
+        return Station.builder().name("Invalid Station").zones(singletonList(4)).build();
+    }
+
 }

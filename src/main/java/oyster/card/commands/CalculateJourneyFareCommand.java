@@ -1,5 +1,6 @@
 package oyster.card.commands;
 
+import oyster.card.exceptions.NoAvailableFareForJourneyException;
 import oyster.card.models.Fare;
 import oyster.card.models.Journey;
 import oyster.card.queries.GetMinimumZonesCrossedQuery;
@@ -7,7 +8,6 @@ import oyster.card.queries.IsZoneOneCrossedQuery;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Predicate;
 
 import static java.util.Comparator.comparing;
@@ -25,21 +25,26 @@ class CalculateJourneyFareCommand {
     }
 
     BigDecimal run(Journey journey) {
-        int minimumCrossedZones = getMinimumZonesCrossedQuery.run(journey);
-        boolean isZoneOneCrossed = isZoneOneCrossedQuery.run(journey);
+        boolean isJourneyByBus = journey.getTransportType() == BUS;
 
-        Predicate<Fare> busTransport = f ->  journey.getTransportType() == BUS && f.getTransportType() == BUS;
-        Predicate<Fare> zonesCrossed = f -> f.getZonesCrossed() == minimumCrossedZones;
-        Predicate<Fare> isZoneOneAllowed = f -> f.isCanIncludeZoneOne() == isZoneOneCrossed;
-        Predicate<Fare> transportType = f -> f.getTransportType() == journey.getTransportType();
+        int minimumCrossedZones = isJourneyByBus ? 0 : getMinimumZonesCrossedQuery.run(journey);
+        boolean isZoneOneCrossed = isJourneyByBus || isZoneOneCrossedQuery.run(journey);
+
+        Predicate<Fare> busTransport = fare -> isJourneyByBus && fare.getTransportType() == BUS;
+        Predicate<Fare> zonesCrossed = fare -> fare.getZonesCrossed() == minimumCrossedZones;
+        Predicate<Fare> transportType = fare -> fare.getTransportType() == journey.getTransportType();
+        Predicate<Fare> isZoneOneAllowed = fare -> fare.isZoneOneIncluded() == isZoneOneCrossed;
 
         Predicate<Fare> faresFilter =
-                busTransport.or(zonesCrossed.and(isZoneOneAllowed).and(transportType));
+                busTransport.or(
+                        zonesCrossed
+                                .and(transportType)
+                                .and(isZoneOneAllowed));
 
-        Optional<Fare> minimumFare = fares.stream()
+        return fares.stream()
                 .filter(faresFilter)
-                .min(comparing(Fare::getValue));
-
-        return minimumFare.get().getValue();
+                .min(comparing(Fare::getValue))
+                .map(Fare::getValue)
+                .orElseThrow(() -> new NoAvailableFareForJourneyException(journey));
     }
 }
