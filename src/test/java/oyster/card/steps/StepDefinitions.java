@@ -72,8 +72,8 @@ public class StepDefinitions {
     }
 
     @Then("^his card balance is £(\\d+.\\d+)$")
-    public void hisCardBalanceIs(double balance) throws Throwable {
+    public void hisCardBalanceIs(BigDecimal balance) throws Throwable {
         BigDecimal actualBalance = getCardBalanceByUserNameQuery.run(userName);
-        assertThat(actualBalance, is(balance));
+        assertThat(actualBalance.doubleValue(), is(balance.doubleValue()));
     }
 }

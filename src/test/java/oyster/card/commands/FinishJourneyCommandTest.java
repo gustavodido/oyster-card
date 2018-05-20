@@ -38,7 +38,7 @@ public class FinishJourneyCommandTest {
         finishJourneyCommand.run(gustavoCard().getUserName(), holbornToEarlsCourtByTrain());
 
         BigDecimal expectedCredit = anyThreeZones().getValue()
-                .min(anywhereInZoneOne().getValue());
+                .subtract(anywhereInZoneOne().getValue());
 
         verify(updateCardBalanceCommand).run(gustavoCard().getUserName(), expectedCredit);
     }
