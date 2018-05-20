@@ -3,6 +3,7 @@ package oyster.card.commands;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import oyster.card.exceptions.NoAvailableFareForJourneyException;
@@ -10,6 +11,7 @@ import oyster.card.models.Journey;
 import oyster.card.models.TransportType;
 import oyster.card.queries.GetMinimumZonesCrossedQuery;
 import oyster.card.queries.IsZoneOneCrossedQuery;
+import oyster.card.repositories.FareRepository;
 import oyster.card.support.FareFactory;
 
 import java.math.BigDecimal;
@@ -17,6 +19,7 @@ import java.math.BigDecimal;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
+import static oyster.card.support.FareFactory.fares;
 import static oyster.card.support.JourneyFactory.newJourney;
 import static oyster.card.support.StationFactory.chelsea;
 import static oyster.card.support.StationFactory.earlsCourt;
@@ -27,17 +30,20 @@ import static oyster.card.support.StationFactory.wimbledon;
 @RunWith(MockitoJUnitRunner.class)
 public class CalculateJourneyFareCommandTest {
     @Mock
+    private FareRepository fareRepository;
+
+    @Mock
     private GetMinimumZonesCrossedQuery getMinimumZonesCrossedQuery;
 
     @Mock
     private IsZoneOneCrossedQuery isZoneOneCrossedQuery;
 
+    @InjectMocks
     private CalculateJourneyFareCommand calculateJourneyFareCommand;
 
     @Before
     public void setUp() {
-        calculateJourneyFareCommand =
-                new CalculateJourneyFareCommand(FareFactory.fares(), getMinimumZonesCrossedQuery, isZoneOneCrossedQuery);
+        when(fareRepository.list()).thenReturn(fares());
     }
 
     @Test

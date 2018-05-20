@@ -5,26 +5,26 @@ import oyster.card.models.Fare;
 import oyster.card.models.Journey;
 import oyster.card.queries.GetMinimumZonesCrossedQuery;
 import oyster.card.queries.IsZoneOneCrossedQuery;
+import oyster.card.repositories.FareRepository;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.function.Predicate;
 
 import static java.util.Comparator.comparing;
 import static oyster.card.models.TransportType.BUS;
 
-class CalculateJourneyFareCommand {
-    private final List<Fare> fares;
+public class CalculateJourneyFareCommand {
     private final GetMinimumZonesCrossedQuery getMinimumZonesCrossedQuery;
     private final IsZoneOneCrossedQuery isZoneOneCrossedQuery;
+    private final FareRepository fareRepository;
 
-    CalculateJourneyFareCommand(List<Fare> fares, GetMinimumZonesCrossedQuery getMinimumZonesCrossedQuery, IsZoneOneCrossedQuery isZoneOneCrossedQuery) {
-        this.fares = fares;
+    public CalculateJourneyFareCommand(FareRepository fareRepository, GetMinimumZonesCrossedQuery getMinimumZonesCrossedQuery, IsZoneOneCrossedQuery isZoneOneCrossedQuery) {
+        this.fareRepository = fareRepository;
         this.getMinimumZonesCrossedQuery = getMinimumZonesCrossedQuery;
         this.isZoneOneCrossedQuery = isZoneOneCrossedQuery;
     }
 
-    BigDecimal run(Journey journey) {
+    public BigDecimal run(Journey journey) {
         final boolean isJourneyByBus = journey.getTransportType() == BUS;
 
         final int minimumCrossedZones = isJourneyByBus ? 0 : getMinimumZonesCrossedQuery.run(journey);
@@ -41,7 +41,8 @@ class CalculateJourneyFareCommand {
                                 .and(transportType)
                                 .and(isZoneOneAllowed));
 
-        return fares
+        return fareRepository
+                .list()
                 .stream()
                 .filter(faresFilter)
                 .min(comparing(Fare::getValue))

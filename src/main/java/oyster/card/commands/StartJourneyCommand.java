@@ -1,23 +1,19 @@
 package oyster.card.commands;
 
 import oyster.card.models.Fare;
-import oyster.card.repositories.FareRepository;
-
-import static java.util.Comparator.comparing;
+import oyster.card.queries.GetMaximumFareQuery;
 
 public class StartJourneyCommand {
     private final UpdateCardBalanceCommand updateCardBalanceCommand;
-    private final FareRepository fareRepository;
+    private final GetMaximumFareQuery getMaximumFareQuery;
 
-    public StartJourneyCommand(UpdateCardBalanceCommand updateCardBalanceCommand, FareRepository fareRepository) {
+    public StartJourneyCommand(UpdateCardBalanceCommand updateCardBalanceCommand, GetMaximumFareQuery getMaximumFareQuery) {
         this.updateCardBalanceCommand = updateCardBalanceCommand;
-        this.fareRepository = fareRepository;
+        this.getMaximumFareQuery = getMaximumFareQuery;
     }
 
     public void run(String userName) {
-        fareRepository.list()
-                .stream()
-                .max(comparing(Fare::getValue))
-                .ifPresent(f -> updateCardBalanceCommand.run(userName, f.getValue().negate()));
+        Fare maxFare = getMaximumFareQuery.run();
+        updateCardBalanceCommand.run(userName, maxFare.getValue().negate());
     }
 }
