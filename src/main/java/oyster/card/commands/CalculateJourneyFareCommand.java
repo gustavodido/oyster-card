@@ -25,10 +25,10 @@ class CalculateJourneyFareCommand {
     }
 
     BigDecimal run(Journey journey) {
-        boolean isJourneyByBus = journey.getTransportType() == BUS;
+        final boolean isJourneyByBus = journey.getTransportType() == BUS;
 
-        int minimumCrossedZones = isJourneyByBus ? 0 : getMinimumZonesCrossedQuery.run(journey);
-        boolean isZoneOneCrossed = isJourneyByBus || isZoneOneCrossedQuery.run(journey);
+        final int minimumCrossedZones = isJourneyByBus ? 0 : getMinimumZonesCrossedQuery.run(journey);
+        final boolean isZoneOneCrossed = isJourneyByBus || isZoneOneCrossedQuery.run(journey);
 
         Predicate<Fare> busTransport = fare -> isJourneyByBus && fare.getTransportType() == BUS;
         Predicate<Fare> zonesCrossed = fare -> fare.getZonesCrossed() == minimumCrossedZones;
@@ -41,7 +41,8 @@ class CalculateJourneyFareCommand {
                                 .and(transportType)
                                 .and(isZoneOneAllowed));
 
-        return fares.stream()
+        return fares
+                .stream()
                 .filter(faresFilter)
                 .min(comparing(Fare::getValue))
                 .map(Fare::getValue)

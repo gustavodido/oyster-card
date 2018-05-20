@@ -1,23 +1,32 @@
 package oyster.card.commands;
 
-import oyster.card.models.Fare;
+import oyster.card.exceptions.InvalidCardBalanceException;
 import oyster.card.models.Journey;
-import oyster.card.models.Station;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public class CalculateCardBalanceCommand {
-    private final List<Station> stations;
-    private final List<Fare> fares;
+import static java.math.BigDecimal.ZERO;
 
-    public CalculateCardBalanceCommand(List<Station> stations, List<Fare> fares) {
-        this.stations = stations;
-        this.fares = fares;
+public class CalculateCardBalanceCommand {
+    private final CalculateJourneyFareCommand calculateJourneyFareCommand;
+
+    public CalculateCardBalanceCommand(CalculateJourneyFareCommand calculateJourneyFareCommand) {
+        this.calculateJourneyFareCommand = calculateJourneyFareCommand;
     }
 
-    public BigDecimal run(BigDecimal cardBalance, List<Journey> journeys) {
-        return BigDecimal.ONE;
+    public BigDecimal run(BigDecimal actualBalance, List<Journey> journeys) {
+        BigDecimal newCardBalance = journeys
+                .stream()
+                .reduce(actualBalance,
+                        (balance, journey) -> balance.min(calculateJourneyFareCommand.run(journey)),
+                        (balance, journey) -> balance);
+
+        if (newCardBalance.compareTo(ZERO) == -1) {
+            throw new InvalidCardBalanceException(newCardBalance);
+        }
+
+        return newCardBalance;
     }
 }
 
