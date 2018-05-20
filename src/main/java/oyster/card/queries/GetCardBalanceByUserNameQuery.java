@@ -6,7 +6,7 @@ import oyster.card.repositories.CardRepository;
 import java.math.BigDecimal;
 
 public class GetCardBalanceByUserNameQuery {
-    private CardRepository cardRepository;
+    private final CardRepository cardRepository;
 
     public GetCardBalanceByUserNameQuery(CardRepository cardRepository) {
         this.cardRepository = cardRepository;

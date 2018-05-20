@@ -7,21 +7,28 @@ import cucumber.api.java.en.When;
 import oyster.card.commands.LoadCardCommand;
 import oyster.card.models.Journey;
 import oyster.card.models.Journey.JourneyBuilder;
+import oyster.card.queries.GetCardBalanceByUserNameQuery;
 import oyster.card.queries.GetStationByNameQuery;
 import oyster.card.repositories.implementation.InMemoryCardRepository;
 import oyster.card.repositories.implementation.InMemoryStationRepository;
 
 import java.math.BigDecimal;
 
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 import static oyster.card.models.TransportType.BUS;
 import static oyster.card.models.TransportType.TRAIN;
 
 public class StepDefinitions {
     private String userName;
-    private JourneyBuilder journeyBuilder = Journey.builder();
+    private final JourneyBuilder journeyBuilder = Journey.builder();
 
-    private LoadCardCommand loadCardCommand = new LoadCardCommand(new InMemoryCardRepository());
-    private GetStationByNameQuery getStationByNameQuery = new GetStationByNameQuery(new InMemoryStationRepository());
+    private final InMemoryCardRepository inMemoryCardRepository = new InMemoryCardRepository();
+
+    private final LoadCardCommand loadCardCommand = new LoadCardCommand(inMemoryCardRepository);
+
+    private final GetStationByNameQuery getStationByNameQuery = new GetStationByNameQuery(new InMemoryStationRepository());
+    private final GetCardBalanceByUserNameQuery getCardBalanceByUserNameQuery = new GetCardBalanceByUserNameQuery(inMemoryCardRepository);
 
     @Given("^the user (.*?) has loaded £(\\d+.\\d+) in his card$")
     public void theUserGustavoHasLoadedSomAmountInHisCard(String userName, BigDecimal amount) throws Throwable {
@@ -45,6 +52,7 @@ public class StepDefinitions {
     }
 
     @Then("^his card balance is £(\\d+.\\d+)$")
-    public void hisCardBalanceIs(double amount) throws Throwable {
+    public void hisCardBalanceIs(double balance) throws Throwable {
+        assertThat(getCardBalanceByUserNameQuery.run(userName), is(balance));
     }
 }

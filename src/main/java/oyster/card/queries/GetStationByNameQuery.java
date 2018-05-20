@@ -5,7 +5,7 @@ import oyster.card.models.Station;
 import oyster.card.repositories.StationRepository;
 
 public class GetStationByNameQuery {
-    private StationRepository stationRepository;
+    private final StationRepository stationRepository;
 
     public GetStationByNameQuery(StationRepository stationRepository) {
         this.stationRepository = stationRepository;
