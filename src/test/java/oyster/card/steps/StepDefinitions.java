@@ -1,30 +1,46 @@
 package oyster.card.steps;
 
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import oyster.card.commands.LoadCardCommand;
-import oyster.card.models.Card;
+import oyster.card.models.Journey.JourneyBuilder;
+import oyster.card.queries.GetStationByNameQuery;
 import oyster.card.repositories.implementation.InMemoryCardRepository;
+import oyster.card.repositories.implementation.InMemoryStationRepository;
 
 import java.math.BigDecimal;
 
-public class StepDefinitions {
-    private Card currentUserCard;
-    private LoadCardCommand loadCardCommand = new LoadCardCommand(new InMemoryCardRepository());
+import static oyster.card.models.TransportType.BUS;
+import static oyster.card.models.TransportType.TRAIN;
 
-    @Given("^The oyster card system has the stations created$")
-    public void theOysterCardSystemHasTheStationsCreated() throws Throwable {
-    }
+public class StepDefinitions {
+    private String userName;
+    private JourneyBuilder journeyBuilder;
+
+    private LoadCardCommand loadCardCommand = new LoadCardCommand(new InMemoryCardRepository());
+    private GetStationByNameQuery getStationByNameQuery = new GetStationByNameQuery(new InMemoryStationRepository());
 
     @Given("^the user (.*?) has loaded £(\\d+.\\d+) in his card$")
     public void theUserGustavoHasLoadedSomAmountInHisCard(String userName, BigDecimal amount) throws Throwable {
-        currentUserCard = loadCardCommand.run(userName, amount);
+        loadCardCommand.run(userName, amount);
+        this.userName = userName;
     }
 
-    @When("^he goes from (.*?) to (.*?) by (.*?)$")
-    public void heGoesFromHolbornToEarlSCourtByTrain(String from, String to, String by) throws Throwable {
+    @When("^he passes through the inward barrier at the (.*?) station$")
+    public void hePassesThroughTheInwardBarrierAtStation(String station) throws Throwable {
+        journeyBuilder.origin(getStationByNameQuery.run(station));
+    }
 
+    @And("^he takes a (.*?)$")
+    public void heTakesATrain(String by) throws Throwable {
+        journeyBuilder.transportType(by.equals("train") ? TRAIN : BUS);
+    }
+
+    @And("^he swipes out at the (.*?)$")
+    public void heSwipesOutAtTheStation(String station) throws Throwable {
+        journeyBuilder.destination(getStationByNameQuery.run(station));
     }
 
     @Then("^his card balance is £(\\d+.\\d+)$")
