@@ -2,13 +2,24 @@ Feature: Oyster Card Problem
 
   Scenario: User successfully take a set of trips
     Given the user Gustavo has loaded £30.00 in his card
-    When he passes through the inward barrier at the Holborn station
-    And he takes a train
-    And he swipes out at the Earl's Court
-    And he passes through the inward barrier at the Earl's Court station
-    And he takes a bus
-    And he swipes out at the Chelsea
-    And he passes through the inward barrier at the Earl's Court station
-    And he takes a train
-    And he swipes out at the Hammersmith
-    Then his card balance is £23.70
+    When passes through the inward barrier at the Holborn station
+    And takes a train
+    And swipes out at the Earl's Court station
+    And passes through the inward barrier at the Earl's Court station
+    And takes a bus
+    And swipes out at the Chelsea station
+    And passes through the inward barrier at the Earl's Court station
+    And takes a train
+    And swipes out at the Hammersmith station
+    Then the card balance is £23.70
+
+  Scenario: User forgets to swipe out the card and have maximum fare discounted
+    Given the user Tuany has loaded £30.00 in his card
+    When passes through the inward barrier at the Holborn station
+    And takes a train
+    And forgets to swipes out at the Earl's Court station
+    And passes through the inward barrier at the Wimbledon station
+    And takes a bus
+    And forgets to swipes out at the Hammersmith station
+    Then the card balance is £23.60
+

@@ -52,26 +52,30 @@ public class StepDefinitions {
         this.userName = userName;
     }
 
-    @When("^he passes through the inward barrier at the (.*?) station$")
-    public void hePassesThroughTheInwardBarrierAtStation(String station) throws Throwable {
+    @When("^passes through the inward barrier at the (.*?) station$")
+    public void userPassesThroughTheInwardBarrierAtStation(String station) throws Throwable {
         journeyBuilder.origin(getStationByNameQuery.run(station));
         startJourneyCommand.run(userName);
-
     }
 
-    @And("^he takes a (.*?)$")
-    public void heTakesATrain(String by) throws Throwable {
+    @And("^takes a (.*?)$")
+    public void userTakesATrain(String by) throws Throwable {
         journeyBuilder.transportType(by.equals("train") ? TRAIN : BUS);
     }
 
-    @And("^he swipes out at the (.*?)$")
-    public void heSwipesOutAtTheStation(String station) throws Throwable {
+    @And("^swipes out at the (.*?) station$")
+    public void userSwipesOutAtTheStation(String station) throws Throwable {
         journeyBuilder.destination(getStationByNameQuery.run(station));
         finishJourneyCommand.run(userName, journeyBuilder.build());
     }
 
-    @Then("^his card balance is £(\\d+.\\d+)$")
-    public void hisCardBalanceIs(BigDecimal balance) throws Throwable {
+    @And("^forgets to swipes out at the (.*?) station$")
+    public void userForgetsToSwipesOutAtTheStation(String station) throws Throwable {
+        journeyBuilder.destination(getStationByNameQuery.run(station));
+    }
+
+    @Then("^the card balance is £(\\d+.\\d+)$")
+    public void userCardBalanceIs(BigDecimal balance) throws Throwable {
         BigDecimal actualBalance = getCardBalanceByUserNameQuery.run(userName);
         assertThat(actualBalance.doubleValue(), is(balance.doubleValue()));
     }
