@@ -8,7 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import repositories.CardRepository;
-import support.CardFactory;
+import stubs.CardStubs;
 
 import java.math.BigDecimal;
 
@@ -27,17 +27,17 @@ public class GetCardBalanceByUserNameQueryTest {
 
     @Test
     public void queryByUserName_ShouldReturnCardBalance() {
-        when(cardRepository.get(CardFactory.gustavoCard().getUserName())).thenReturn(of(CardFactory.gustavoCard()));
+        when(cardRepository.get(CardStubs.gustavoCard().getUserName())).thenReturn(of(CardStubs.gustavoCard()));
 
-        BigDecimal expectedBalance = getCardBalanceByUserNameQuery.run(CardFactory.gustavoCard().getUserName());
-        assertThat(expectedBalance, CoreMatchers.is(CardFactory.gustavoCard().getBalance()));
+        BigDecimal expectedBalance = getCardBalanceByUserNameQuery.run(CardStubs.gustavoCard().getUserName());
+        assertThat(expectedBalance, CoreMatchers.is(CardStubs.gustavoCard().getBalance()));
     }
 
     @Test(expected = CardNotFoundException.class)
     public void nonExistentUserName_ShouldThrowException() {
-        when(cardRepository.get(CardFactory.invalidCard().getUserName())).thenReturn(empty());
+        when(cardRepository.get(CardStubs.invalidCard().getUserName())).thenReturn(empty());
 
-        getCardBalanceByUserNameQuery.run(CardFactory.invalidCard().getUserName());
+        getCardBalanceByUserNameQuery.run(CardStubs.invalidCard().getUserName());
     }
 
 }

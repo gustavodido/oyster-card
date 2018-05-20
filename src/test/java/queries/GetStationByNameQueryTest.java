@@ -14,8 +14,8 @@ import static java.util.Optional.of;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
-import static support.StationFactory.holborn;
-import static support.StationFactory.invalidStation;
+import static stubs.StationStubs.holborn;
+import static stubs.StationStubs.invalidStation;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GetStationByNameQueryTest {

@@ -14,8 +14,8 @@ import static java.math.BigDecimal.TEN;
 import static java.math.BigDecimal.ZERO;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static support.CardFactory.gustavoCard;
-import static support.FareFactory.anyThreeZones;
+import static stubs.CardStubs.gustavoCard;
+import static stubs.FareStubs.anyThreeZones;
 
 @RunWith(MockitoJUnitRunner.class)
 public class StartJourneyCommandTest {

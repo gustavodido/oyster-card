@@ -1,4 +1,4 @@
-package support;
+package stubs;
 
 import models.Journey;
 import models.Station;
@@ -10,7 +10,7 @@ import static java.util.Arrays.asList;
 import static models.TransportType.BUS;
 import static models.TransportType.TRAIN;
 
-public class JourneyFactory {
+public class JourneyStubs {
     public static Journey newJourney(Station origin, Station destination, TransportType transportType) {
         return Journey.builder()
                 .origin(origin)
@@ -27,15 +27,15 @@ public class JourneyFactory {
     }
 
     public static Journey holbornToEarlsCourtByTrain() {
-        return  newJourney(StationFactory.holborn(), StationFactory.earlsCourt(), TRAIN);
+        return  newJourney(StationStubs.holborn(), StationStubs.earlsCourt(), TRAIN);
     }
 
     public static Journey earlsCourtToChelseaByBus() {
-        return newJourney(StationFactory.holborn(), StationFactory.chelsea(), BUS);
+        return newJourney(StationStubs.holborn(), StationStubs.chelsea(), BUS);
     }
 
     public static Journey earlsCourtToHammersmithByTrain() {
-        return newJourney(StationFactory.holborn(), StationFactory.hammersmith(), TRAIN);
+        return newJourney(StationStubs.holborn(), StationStubs.hammersmith(), TRAIN);
     }
 
     public static List<Journey> journeys() {

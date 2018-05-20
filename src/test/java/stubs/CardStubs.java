@@ -1,10 +1,10 @@
-package support;
+package stubs;
 
 import models.Card;
 
 import static java.math.BigDecimal.TEN;
 
-public class CardFactory {
+public class CardStubs {
     public static Card gustavoCard() {
         return Card.builder()
                 .userName("Gustavo")

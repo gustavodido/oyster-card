@@ -15,7 +15,7 @@ import static java.util.Optional.of;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
-import static support.CardFactory.gustavoCard;
+import static stubs.CardStubs.gustavoCard;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UpdateCardBalanceCommandTest {

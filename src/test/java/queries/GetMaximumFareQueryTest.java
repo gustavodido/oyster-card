@@ -12,9 +12,9 @@ import static java.util.Arrays.asList;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
-import static support.FareFactory.anyBusJourney;
-import static support.FareFactory.anyThreeZones;
-import static support.FareFactory.anywhereInZoneOne;
+import static stubs.FareStubs.anyBusJourney;
+import static stubs.FareStubs.anyThreeZones;
+import static stubs.FareStubs.anywhereInZoneOne;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GetMaximumFareQueryTest {

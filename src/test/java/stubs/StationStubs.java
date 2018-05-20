@@ -1,11 +1,11 @@
-package support;
+package stubs;
 
 import models.Station;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 
-public class StationFactory {
+public class StationStubs {
     public static Station holborn() {
         return Station.builder().name("Holborn").zones(singletonList(1)).build();
     }

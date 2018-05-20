@@ -1,4 +1,4 @@
-package support;
+package stubs;
 
 import models.Fare;
 import models.TransportType;
@@ -8,7 +8,7 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 
-public class FareFactory {
+public class FareStubs {
     public static Fare anywhereInZoneOne() {
         return Fare.builder()
                 .transportType(TransportType.TRAIN)

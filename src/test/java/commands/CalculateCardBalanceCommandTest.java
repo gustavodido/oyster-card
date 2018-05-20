@@ -11,13 +11,13 @@ import java.math.BigDecimal;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
-import static support.FareFactory.anyBusJourney;
-import static support.FareFactory.anyOneZoneOutsideZoneOne;
-import static support.FareFactory.anywhereInZoneOne;
-import static support.JourneyFactory.earlsCourtToChelseaByBus;
-import static support.JourneyFactory.earlsCourtToHammersmithByTrain;
-import static support.JourneyFactory.holbornToEarlsCourtByTrain;
-import static support.JourneyFactory.journeys;
+import static stubs.FareStubs.anyBusJourney;
+import static stubs.FareStubs.anyOneZoneOutsideZoneOne;
+import static stubs.FareStubs.anywhereInZoneOne;
+import static stubs.JourneyStubs.earlsCourtToChelseaByBus;
+import static stubs.JourneyStubs.earlsCourtToHammersmithByTrain;
+import static stubs.JourneyStubs.holbornToEarlsCourtByTrain;
+import static stubs.JourneyStubs.journeys;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CalculateCardBalanceCommandTest {
