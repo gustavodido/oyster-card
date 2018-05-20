@@ -1,6 +1,6 @@
 package oyster.card.queries;
 
-import oyster.card.exceptions.InvalidStationNameException;
+import oyster.card.exceptions.StationNotFoundException;
 import oyster.card.models.Station;
 import oyster.card.repositories.StationRepository;
 
@@ -13,7 +13,7 @@ public class GetStationByNameQuery {
 
     public Station run(String name) {
         return stationRepository
-                .getByName(name)
-                .orElseThrow(() -> new InvalidStationNameException(name));
+                .get(name)
+                .orElseThrow(() -> new StationNotFoundException(name));
     }
 }

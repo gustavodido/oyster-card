@@ -5,6 +5,9 @@ import oyster.card.repositories.CardRepository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+
+import static java.util.Optional.ofNullable;
 
 public class InMemoryCardRepository implements CardRepository {
     private static Map<String, Card> cards = new HashMap<>();
@@ -15,7 +18,7 @@ public class InMemoryCardRepository implements CardRepository {
     }
 
     @Override
-    public Card get(String userName) {
-        return cards.get(userName);
+    public Optional<Card> get(String userName) {
+        return ofNullable(cards.get(userName));
     }
 }

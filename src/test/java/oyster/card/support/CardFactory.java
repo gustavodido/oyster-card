@@ -11,4 +11,11 @@ public class CardFactory {
                 .balance(TEN)
                 .build();
     }
+
+    public static Card invalidCard() {
+        return Card.builder()
+                .userName("Invalid card")
+                .build();
+    }
+
 }

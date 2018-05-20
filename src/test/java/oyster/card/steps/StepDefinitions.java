@@ -5,6 +5,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import oyster.card.commands.LoadCardCommand;
+import oyster.card.models.Journey;
 import oyster.card.models.Journey.JourneyBuilder;
 import oyster.card.queries.GetStationByNameQuery;
 import oyster.card.repositories.implementation.InMemoryCardRepository;
@@ -17,7 +18,7 @@ import static oyster.card.models.TransportType.TRAIN;
 
 public class StepDefinitions {
     private String userName;
-    private JourneyBuilder journeyBuilder;
+    private JourneyBuilder journeyBuilder = Journey.builder();
 
     private LoadCardCommand loadCardCommand = new LoadCardCommand(new InMemoryCardRepository());
     private GetStationByNameQuery getStationByNameQuery = new GetStationByNameQuery(new InMemoryStationRepository());

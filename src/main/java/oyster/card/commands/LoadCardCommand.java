@@ -6,7 +6,6 @@ import oyster.card.repositories.CardRepository;
 import java.math.BigDecimal;
 
 import static java.math.BigDecimal.ZERO;
-import static java.util.Optional.ofNullable;
 
 public class LoadCardCommand {
     private final CardRepository cardRepository;
@@ -17,7 +16,7 @@ public class LoadCardCommand {
     }
 
     public Card run(String userName, BigDecimal amount) {
-        BigDecimal balance = ofNullable(cardRepository.get(userName))
+        BigDecimal balance = cardRepository.get(userName)
                 .orElse(Card.builder().balance(ZERO).build())
                 .getBalance()
                 .add(amount);

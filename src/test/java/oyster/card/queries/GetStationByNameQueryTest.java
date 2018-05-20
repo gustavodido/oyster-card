@@ -5,7 +5,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import oyster.card.exceptions.InvalidStationNameException;
+import oyster.card.exceptions.StationNotFoundException;
 import oyster.card.models.Station;
 import oyster.card.repositories.StationRepository;
 
@@ -27,15 +27,15 @@ public class GetStationByNameQueryTest {
 
     @Test
     public void queryByName_ShouldReturnStation() {
-        when(stationRepository.getByName(holborn().getName())).thenReturn(of(holborn()));
+        when(stationRepository.get(holborn().getName())).thenReturn(of(holborn()));
 
         Station expectedStation = getStationByNameQuery.run(holborn().getName());
         assertThat(expectedStation, is(holborn()));
     }
 
-    @Test(expected = InvalidStationNameException.class)
+    @Test(expected = StationNotFoundException.class)
     public void nonExistentName_ShouldThrowException() {
-        when(stationRepository.getByName(invalidStation().getName())).thenReturn(empty());
+        when(stationRepository.get(invalidStation().getName())).thenReturn(empty());
 
         getStationByNameQuery.run(invalidStation().getName());
     }

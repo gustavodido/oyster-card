@@ -10,6 +10,8 @@ import oyster.card.repositories.CardRepository;
 
 import java.math.BigDecimal;
 
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
@@ -25,7 +27,7 @@ public class LoadCardCommandTest {
 
     @Test
     public void loadAmountInNewCard_ShouldCreateCard() {
-        when(cardRepository.get(gustavoCard().getUserName())).thenReturn(null);
+        when(cardRepository.get(gustavoCard().getUserName())).thenReturn(empty());
 
         Card card = loadCardCommand.run(gustavoCard().getUserName(), gustavoCard().getBalance());
 
@@ -34,7 +36,7 @@ public class LoadCardCommandTest {
 
     @Test
     public void loadAmountInExistingCard_ShouldUpdateBalance() {
-        when(cardRepository.get(gustavoCard().getUserName())).thenReturn(gustavoCard());
+        when(cardRepository.get(gustavoCard().getUserName())).thenReturn(of(gustavoCard()));
 
         Card card = loadCardCommand.run(gustavoCard().getUserName(), gustavoCard().getBalance());
 
