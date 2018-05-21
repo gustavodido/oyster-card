@@ -1,8 +1,20 @@
 ## Oyster Card Problem
 
-#### Application
+ - [Application](#application)
+    - [Running](#running) 
+    - [Tech Stack](#techstack)
+ - [Approach](#approach)
+    - [Testability](#testability)
+    - [Simplicity](#simplicity)
+ - [Design](#design)
+    - [Command & Query Object Pattern](#copattern)
+    - [Fare design](#fare)
+  - [Testing](#testing)
 
-##### Running
+-----
+#### Application <a name="application" />
+
+##### Running <a name="running" />
 
 Unzip the folder and build the application (if gradle is not installed, it will be downloaded):
 
@@ -16,7 +28,7 @@ Windows
 
 This will run the acceptance test scenarios (*AcceptanceTests.feature*) written in gherkin. There is no I/O implemented in the solution, it is relying on the tests. 
 
-##### Tech Stack
+##### Tech Stack <a name="techstack" />
 
 |Technology			| Objective				|
 |-------------------|-----------------------|
@@ -28,15 +40,17 @@ This will run the acceptance test scenarios (*AcceptanceTests.feature*) written 
 |Hamcrest			| Assertion library|
 |Cucumber			| Testing library for BDD |
 
-#### Approach
+---------
+
+#### Approach <a name="approach" />
 
 I have based the entire solution on two main goals: *testability* and *simplicity*.
 
-##### Testability
+##### Testability <a name="testability" />
 
 All classes (except the in memory repositories) are covered by unit testing. Also, there is a feature test covering the end-to-end scenarios that are proposed by the problem statement. Finally, relying on tests in the development is the main reason why I have not added any kind of I/O interaction in the solution.
 
-##### Simplicity
+##### Simplicity <a name="simplicity" />
 
 In order to keep the solution as simple as possible, I have chosen to:
 
@@ -45,9 +59,11 @@ In order to keep the solution as simple as possible, I have chosen to:
 3. Another reason to do not waste time with I/O interactions like reading user input and printing the results in the screen. 
 4. I am very keen on the functional paradigm, so I use it to write smarter and less code.
 
-#### Design
+---------
 
-##### Command & Query Object Pattern
+#### Design <a name="design" />
+
+##### Command & Query Object Pattern <a name="copattern" />
 
 The very first thing to notice is that I am not using the traditional Service-Repository pattern. In my 14 years of experience, I have seen (and wrongly designed) applications with this pattern that resulted in:
 
@@ -69,7 +85,7 @@ Every command or query is a really small piece of business logic that can be ind
 
 **A:** In a real world application those repositories would be automatically provided by an ORM implementation. If not, I would remove them and implement then as commands/queries with database access.
 
-##### Fare design
+##### Fare design <a name="fare" />
 
 The design of how the fares will work is the open challenge in the problem. Given the context provided, there are two major group of ways to do that:
 
@@ -83,7 +99,9 @@ The obvious disadvantage of this approache is the flexibility that you lose. Cha
 
 I have chosen to implement the fares as an external datasource and dynamic fetch them all to choose which one is the best one for the user. The main reason, given the context, is the code complexity that it is still low. The flexibility to manage the fares outside the code is worth in my opion.
 
-#### Testing
+---------
+
+#### Testing <a name="testing" />
 
 As expected in any software, the classes are covered by unit tests including the exceptional paths. Additionally, I have written scenarios in a feature test using cucumber in order to show that the solution meets the requirements.
 
