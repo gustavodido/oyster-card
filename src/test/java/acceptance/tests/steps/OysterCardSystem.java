@@ -3,11 +3,12 @@ package acceptance.tests.steps;
 import commands.CalculateJourneyFareCommand;
 import commands.FinishJourneyCommand;
 import commands.StartJourneyCommand;
+import commands.SwipeCardInCommand;
 import commands.UpdateCardBalanceCommand;
 import exceptions.InsufficientFundsException;
 import models.Journey;
 import queries.GetBusFareQuery;
-import queries.GetCardBalanceByUserNameQuery;
+import queries.GetCardByUserNameQuery;
 import queries.GetMaximumFareQuery;
 import queries.GetMinimumZonesCrossedQuery;
 import queries.GetStationByNameQuery;
@@ -37,7 +38,7 @@ class OysterCardSystem {
     private final StationRepository inMemoryStationRepository = new InMemoryStationRepository();
 
     private final GetStationByNameQuery getStationByNameQuery = new GetStationByNameQuery(inMemoryStationRepository);
-    private final GetCardBalanceByUserNameQuery getCardBalanceByUserNameQuery = new GetCardBalanceByUserNameQuery(inMemoryCardRepository);
+    private final GetCardByUserNameQuery getCardByUserNameQuery = new GetCardByUserNameQuery(inMemoryCardRepository);
     private final GetMaximumFareQuery getMaximumFareQuery = new GetMaximumFareQuery(inMemoryFareRepository);
     private final GetBusFareQuery getBusFareQuery = new GetBusFareQuery(inMemoryFareRepository);
     private final GetMinimumZonesCrossedQuery getMinimumZonesCrossedQuery = new GetMinimumZonesCrossedQuery();
@@ -45,7 +46,8 @@ class OysterCardSystem {
 
     private final CalculateJourneyFareCommand calculateJourneyFareCommand = new CalculateJourneyFareCommand(inMemoryFareRepository, getMinimumZonesCrossedQuery, isZoneOneCrossedQuery);
     private final UpdateCardBalanceCommand updateCardBalanceCommand = new UpdateCardBalanceCommand(inMemoryCardRepository);
-    private final StartJourneyCommand startJourneyCommand = new StartJourneyCommand(getCardBalanceByUserNameQuery, updateCardBalanceCommand, getMaximumFareQuery, getBusFareQuery);
+    private final SwipeCardInCommand swipeCardInCommand = new SwipeCardInCommand(inMemoryCardRepository);
+    private final StartJourneyCommand startJourneyCommand = new StartJourneyCommand(swipeCardInCommand);
     private final FinishJourneyCommand finishJourneyCommand = new FinishJourneyCommand(calculateJourneyFareCommand, updateCardBalanceCommand, getMaximumFareQuery);
 
     void loadCardForUser(String userName, BigDecimal amount) {
@@ -74,7 +76,7 @@ class OysterCardSystem {
     }
 
     void assertUserBalanceIs(BigDecimal balance) {
-        BigDecimal actualBalance = getCardBalanceByUserNameQuery.run(userName);
+        BigDecimal actualBalance = getCardByUserNameQuery.run(userName).getBalance();
         assertThat(actualBalance, closeTo(balance, new BigDecimal("0.03")));
     }
 
