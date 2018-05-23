@@ -8,6 +8,8 @@ import queries.GetMaximumFareQuery;
 
 import java.math.BigDecimal;
 
+import static java.math.RoundingMode.HALF_UP;
+
 public class StartJourneyCommand {
     private final GetCardBalanceByUserNameQuery getCardBalanceByUserNameQuery;
     private final UpdateCardBalanceCommand updateCardBalanceCommand;
@@ -22,10 +24,15 @@ public class StartJourneyCommand {
     }
 
     public void run(String userName) {
-        Fare busFare = getBusFareQuery.run();
+        BigDecimal busFare = getBusFareQuery.run()
+                .getValue()
+                .setScale(2, HALF_UP);
 
-        BigDecimal currentBalance = getCardBalanceByUserNameQuery.run(userName);
-        if (busFare.getValue().compareTo(currentBalance) == 1) {
+        BigDecimal currentBalance = getCardBalanceByUserNameQuery
+                .run(userName)
+                .setScale(2, HALF_UP);
+
+        if (busFare.compareTo(currentBalance) == 1) {
             throw new InsufficientFundsException(userName, currentBalance);
         }
 

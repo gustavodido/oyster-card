@@ -24,6 +24,7 @@ import java.math.BigDecimal;
 import static models.TransportType.BUS;
 import static models.TransportType.TRAIN;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.number.BigDecimalCloseTo.closeTo;
 import static org.junit.Assert.assertThat;
 
 class OysterCardSystem {
@@ -74,7 +75,7 @@ class OysterCardSystem {
 
     void assertUserBalanceIs(BigDecimal balance) {
         BigDecimal actualBalance = getCardBalanceByUserNameQuery.run(userName);
-        assertThat(actualBalance.doubleValue(), is(balance.doubleValue()));
+        assertThat(actualBalance, closeTo(balance, new BigDecimal("0.03")));
     }
 
     void assertUserHasInsufficientFunds() {
