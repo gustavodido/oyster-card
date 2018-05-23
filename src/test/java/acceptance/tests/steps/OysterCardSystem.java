@@ -6,6 +6,7 @@ import commands.StartJourneyCommand;
 import commands.UpdateCardBalanceCommand;
 import exceptions.InsufficientFundsException;
 import models.Journey;
+import queries.GetBusFareQuery;
 import queries.GetCardBalanceByUserNameQuery;
 import queries.GetMaximumFareQuery;
 import queries.GetMinimumZonesCrossedQuery;
@@ -37,12 +38,13 @@ class OysterCardSystem {
     private final GetStationByNameQuery getStationByNameQuery = new GetStationByNameQuery(inMemoryStationRepository);
     private final GetCardBalanceByUserNameQuery getCardBalanceByUserNameQuery = new GetCardBalanceByUserNameQuery(inMemoryCardRepository);
     private final GetMaximumFareQuery getMaximumFareQuery = new GetMaximumFareQuery(inMemoryFareRepository);
+    private final GetBusFareQuery getBusFareQuery = new GetBusFareQuery(inMemoryFareRepository);
     private final GetMinimumZonesCrossedQuery getMinimumZonesCrossedQuery = new GetMinimumZonesCrossedQuery();
     private final IsZoneOneCrossedQuery isZoneOneCrossedQuery = new IsZoneOneCrossedQuery();
 
     private final CalculateJourneyFareCommand calculateJourneyFareCommand = new CalculateJourneyFareCommand(inMemoryFareRepository, getMinimumZonesCrossedQuery, isZoneOneCrossedQuery);
     private final UpdateCardBalanceCommand updateCardBalanceCommand = new UpdateCardBalanceCommand(inMemoryCardRepository);
-    private final StartJourneyCommand startJourneyCommand = new StartJourneyCommand(getCardBalanceByUserNameQuery, updateCardBalanceCommand, getMaximumFareQuery);
+    private final StartJourneyCommand startJourneyCommand = new StartJourneyCommand(getCardBalanceByUserNameQuery, updateCardBalanceCommand, getMaximumFareQuery, getBusFareQuery);
     private final FinishJourneyCommand finishJourneyCommand = new FinishJourneyCommand(calculateJourneyFareCommand, updateCardBalanceCommand, getMaximumFareQuery);
 
     void loadCardForUser(String userName, BigDecimal amount) {

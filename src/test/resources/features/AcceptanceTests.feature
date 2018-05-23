@@ -1,5 +1,6 @@
 Feature: Oyster Card Problem
 
+  @wip
   Scenario: User successfully take a set of trips
     Given the user Gustavo has loaded £30.00 in the card
     When passes through the inward barrier at the Holborn station
@@ -13,6 +14,7 @@ Feature: Oyster Card Problem
     And swipes out at the Hammersmith station
     Then the card balance is £23.70
 
+  @wip
   Scenario: User forgets to swipe out the card and have maximum fare discounted
     Given the user Tuany has loaded £30.00 in the card
     When passes through the inward barrier at the Holborn station
@@ -30,6 +32,7 @@ Feature: Oyster Card Problem
     And swipes out at the Wimbledon station
     Then the card balance is £-1.40
 
+  @wip
   Scenario: User does have sufficient funds to start the journey
     Given the user Roni has loaded £1.79 in the card
     When passes through the inward barrier at the Holborn station
