@@ -35,7 +35,7 @@ public class StepDefinitions {
         // Don't need to do anything
     }
 
-    @Then("^the card balance is £(\\d+.\\d+)$")
+    @Then("^the card balance is £(-?\\d+.\\d+)$")
     public void userCardBalanceIs(BigDecimal balance) throws Throwable {
         oysterCardSystem.assertUserBalanceIs(balance);
     }

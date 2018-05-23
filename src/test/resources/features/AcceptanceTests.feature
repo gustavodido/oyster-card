@@ -23,7 +23,14 @@ Feature: Oyster Card Problem
     And forgets to swipes out at the Hammersmith station
     Then the card balance is £23.60
 
+  Scenario: User balance can be negative if more than minimum bus fare
+    Given the user Eluisete has loaded £1.80 in the card
+    When passes through the inward barrier at the Holborn station
+    And takes a train
+    And swipes out at the Wimbledon station
+    Then the card balance is £-1.40
+
   Scenario: User does have sufficient funds to start the journey
-    Given the user Eluisete has loaded £3.00 in the card
-    When passes through the inward barrier at the Wimbledon station
+    Given the user Roni has loaded £1.79 in the card
+    When passes through the inward barrier at the Holborn station
     Then the barrier does not open because of insufficient funds
