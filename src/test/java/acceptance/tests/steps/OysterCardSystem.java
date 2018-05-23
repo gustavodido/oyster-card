@@ -5,9 +5,7 @@ import commands.FinishJourneyCommand;
 import commands.StartJourneyCommand;
 import commands.SwipeCardInCommand;
 import commands.UpdateCardBalanceCommand;
-import exceptions.InsufficientFundsException;
 import models.Journey;
-import queries.GetBusFareQuery;
 import queries.GetCardByUserNameQuery;
 import queries.GetMaximumFareQuery;
 import queries.GetMinimumZonesCrossedQuery;
@@ -40,7 +38,6 @@ class OysterCardSystem {
     private final GetStationByNameQuery getStationByNameQuery = new GetStationByNameQuery(inMemoryStationRepository);
     private final GetCardByUserNameQuery getCardByUserNameQuery = new GetCardByUserNameQuery(inMemoryCardRepository);
     private final GetMaximumFareQuery getMaximumFareQuery = new GetMaximumFareQuery(inMemoryFareRepository);
-    private final GetBusFareQuery getBusFareQuery = new GetBusFareQuery(inMemoryFareRepository);
     private final GetMinimumZonesCrossedQuery getMinimumZonesCrossedQuery = new GetMinimumZonesCrossedQuery();
     private final IsZoneOneCrossedQuery isZoneOneCrossedQuery = new IsZoneOneCrossedQuery();
 
@@ -48,7 +45,7 @@ class OysterCardSystem {
     private final UpdateCardBalanceCommand updateCardBalanceCommand = new UpdateCardBalanceCommand(inMemoryCardRepository);
     private final SwipeCardInCommand swipeCardInCommand = new SwipeCardInCommand(inMemoryCardRepository);
     private final StartJourneyCommand startJourneyCommand = new StartJourneyCommand(swipeCardInCommand);
-    private final FinishJourneyCommand finishJourneyCommand = new FinishJourneyCommand(calculateJourneyFareCommand, updateCardBalanceCommand, getMaximumFareQuery);
+    private final FinishJourneyCommand finishJourneyCommand = new FinishJourneyCommand(calculateJourneyFareCommand, updateCardBalanceCommand, getMaximumFareQuery, getCardByUserNameQuery);
 
     void loadCardForUser(String userName, BigDecimal amount) {
         updateCardBalanceCommand.run(userName, amount);
@@ -58,12 +55,7 @@ class OysterCardSystem {
     void userPassInwardBarrierInStation(String station) {
         journeyBuilder.origin(getStationByNameQuery.run(station));
 
-        try {
-            isUserOutOfFunds = false;
-            startJourneyCommand.run(userName);
-        } catch (InsufficientFundsException ex) {
-            isUserOutOfFunds = true;
-        }
+        startJourneyCommand.run(userName);
     }
 
     void userTakesTransport(String by) {

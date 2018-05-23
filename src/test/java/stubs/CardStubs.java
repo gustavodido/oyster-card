@@ -13,6 +13,12 @@ public class CardStubs {
                 .build();
     }
 
+    public static Card gustavoSwipedInCard() {
+        return gustavoCard().toBuilder()
+                .isSwipedIn(true)
+                .build();
+    }
+
     public static Card invalidCard() {
         return Card.builder()
                 .userName("Invalid card")

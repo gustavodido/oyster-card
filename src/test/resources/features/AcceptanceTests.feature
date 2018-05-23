@@ -13,7 +13,8 @@ Feature: Oyster Card Problem
     And swipes out at the Hammersmith station
     Then the card balance is £23.70
 
-  Scenario: User forgets to swipe out the card and have maximum fare discounted
+  @wip
+  Scenario: User forgets to swipe out and cannot leave the station
     Given the user Tuany has loaded £30.00 in the card
     When passes through the inward barrier at the Holborn station
     And takes a train
@@ -23,6 +24,7 @@ Feature: Oyster Card Problem
     And forgets to swipes out at the Hammersmith station
     Then the card balance is £23.60
 
+  @wip
   Scenario: User balance can be negative if more than minimum bus fare
     Given the user Eluisete has loaded £1.80 in the card
     When passes through the inward barrier at the Holborn station
@@ -30,6 +32,7 @@ Feature: Oyster Card Problem
     And swipes out at the Wimbledon station
     Then the card balance is £-1.40
 
+  @wip
   Scenario: User does have sufficient funds to start the journey
     Given the user Roni has loaded £1.79 in the card
     When passes through the inward barrier at the Holborn station
