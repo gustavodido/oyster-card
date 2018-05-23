@@ -9,6 +9,7 @@ public class CardStubs {
         return Card.builder()
                 .userName("Gustavo")
                 .balance(TEN)
+                .isSwipedIn(false)
                 .build();
     }
 
