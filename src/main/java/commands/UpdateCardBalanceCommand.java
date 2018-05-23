@@ -15,18 +15,17 @@ public class UpdateCardBalanceCommand {
     }
 
     public Card run(String userName, BigDecimal amount) {
-        BigDecimal balance = cardRepository.get(userName)
-                .orElse(Card.builder().balance(ZERO).build())
-                .getBalance()
-                .add(amount);
+        Card currentCard = cardRepository.get(userName)
+                .orElse(Card.builder()
+                        .userName(userName)
+                        .balance(ZERO)
+                        .build());
 
-        Card card = Card.builder()
-                .userName(userName)
-                .balance(balance)
+        Card card = currentCard.toBuilder()
+                .balance(currentCard.getBalance().add(amount))
                 .build();
 
         cardRepository.save(card);
-
         return card;
     }
 }
