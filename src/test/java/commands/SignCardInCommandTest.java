@@ -33,7 +33,7 @@ public class SignCardInCommandTest {
     }
 
     @Test(expected = CardNotFoundException.class)
-    public void signInUnexistentCard_ShouldThrowAnException() {
+    public void signInNonexistentCard_ShouldThrowAnException() {
         signCardInCommand.run(invalidCard().getUserName());
     }
 

@@ -7,6 +7,7 @@ import commands.StartJourneyCommand;
 import commands.UpdateCardBalanceCommand;
 import models.Journey;
 import queries.GetCardBalanceByUserNameQuery;
+import queries.GetCardByUserNameQuery;
 import queries.GetMaximumFareQuery;
 import queries.GetMinimumZonesCrossedQuery;
 import queries.GetStationByNameQuery;
@@ -43,7 +44,8 @@ class OysterCardSystem {
     private final CalculateJourneyFareCommand calculateJourneyFareCommand = new CalculateJourneyFareCommand(inMemoryFareRepository, getMinimumZonesCrossedQuery, isZoneOneCrossedQuery);
     private final UpdateCardBalanceCommand updateCardBalanceCommand = new UpdateCardBalanceCommand(inMemoryCardRepository);
     private final StartJourneyCommand startJourneyCommand = new StartJourneyCommand(getCardBalanceByUserNameQuery, updateCardBalanceCommand, getMaximumFareQuery);
-    private final FinishJourneyCommand finishJourneyCommand = new FinishJourneyCommand(calculateJourneyFareCommand, updateCardBalanceCommand, getMaximumFareQuery);
+    private final GetCardByUserNameQuery getCardByUserNameQuery = new GetCardByUserNameQuery(inMemoryCardRepository);
+    private final FinishJourneyCommand finishJourneyCommand = new FinishJourneyCommand(getCardByUserNameQuery, calculateJourneyFareCommand, updateCardBalanceCommand, getMaximumFareQuery);
     private final SignCardInCommand signCardInCommand = new SignCardInCommand(inMemoryCardRepository);
 
     void loadCardForUser(String userName, BigDecimal amount) {
