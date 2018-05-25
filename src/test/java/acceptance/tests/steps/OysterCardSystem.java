@@ -53,9 +53,12 @@ class OysterCardSystem {
         this.userName = userName;
     }
 
-    void userPassInwardBarrierInStation(String station) {
+    void userPassInwardBarrierInStation(String station, boolean hasUserSignedIn) {
         journeyBuilder.origin(getStationByNameQuery.run(station));
-        signCardInCommand.run(userName);
+
+        if (hasUserSignedIn) {
+            signCardInCommand.run(userName);
+        }
 
 //        try {
 //            isUserOutOfFunds = false;

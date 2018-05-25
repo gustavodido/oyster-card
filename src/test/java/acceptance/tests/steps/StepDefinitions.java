@@ -17,7 +17,12 @@ public class StepDefinitions {
 
     @When("^passes through the inward barrier at the (.*?) station$")
     public void userPassesThroughTheInwardBarrierAtStation(String station) throws Throwable {
-        oysterCardSystem.userPassInwardBarrierInStation(station);
+        oysterCardSystem.userPassInwardBarrierInStation(station, true);
+    }
+
+    @When("^passes through the inward barrier at the (.*?) station without signing in$")
+    public void passesThroughTheInwardBarrierAtTheHolbornStationWithoutSigningIn(String station) throws Throwable {
+        oysterCardSystem.userPassInwardBarrierInStation(station, false);
     }
 
     @And("^takes a (.*?)$")
