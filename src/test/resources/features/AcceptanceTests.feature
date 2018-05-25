@@ -20,8 +20,9 @@ Feature: Oyster Card Problem
     And swipes out at the Earl's Court station
     Then the card balance is £26.80
 
-      @wip
-  Scenario: User does have sufficient funds to start the journey
-    Given the user Eluisete has loaded £3.00 in the card
+  Scenario: User does have sufficient funds to finish the journey
+    Given the user Eluisete has loaded £1.00 in the card
     When passes through the inward barrier at the Wimbledon station
+    And takes a train
+    And swipes out at the Earl's Court station
     Then the barrier does not open because of insufficient funds

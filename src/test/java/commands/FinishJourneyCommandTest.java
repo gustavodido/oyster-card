@@ -1,5 +1,6 @@
 package commands;
 
+import exceptions.InsufficientFundsException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static stubs.CardStubs.gustavoCard;
+import static stubs.CardStubs.notFundedCard;
 import static stubs.CardStubs.signedInGustavoCard;
 import static stubs.FareStubs.anyThreeZones;
 import static stubs.FareStubs.anywhereInZoneOne;
@@ -62,4 +64,10 @@ public class FinishJourneyCommandTest {
         verify(updateCardBalanceCommand).run(gustavoCard().getUserName(), expectedDebit);
     }
 
+    @Test(expected = InsufficientFundsException.class)
+    public void finishJourneyWithoutFunds_ShouldThrowException() {
+        when(getCardByUserNameQuery.run(notFundedCard().getUserName())).thenReturn(notFundedCard());
+
+        finishJourneyCommand.run(gustavoCard().getUserName(), holbornToEarlsCourtByTrain());
     }
+}

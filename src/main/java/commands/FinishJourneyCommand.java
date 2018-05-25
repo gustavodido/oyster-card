@@ -1,5 +1,6 @@
 package commands;
 
+import exceptions.InsufficientFundsException;
 import models.Card;
 import models.Journey;
 import queries.GetCardByUserNameQuery;
@@ -28,6 +29,11 @@ public class FinishJourneyCommand {
         BigDecimal journeyFare = card.isSignedIn() ?
                 calculateJourneyFareCommand.run(journey) :
                 getMaximumFareQuery.run().getValue();
+
+        BigDecimal currentBalance = card.getBalance();
+        if (journeyFare.compareTo(currentBalance) == 1) {
+            throw new InsufficientFundsException(userName, currentBalance);
+        }
 
         updateCardBalanceCommand.run(userName, journeyFare.negate());
     }

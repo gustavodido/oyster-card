@@ -5,6 +5,7 @@ import commands.FinishJourneyCommand;
 import commands.SignCardInCommand;
 import commands.StartJourneyCommand;
 import commands.UpdateCardBalanceCommand;
+import exceptions.InsufficientFundsException;
 import models.Journey;
 import queries.GetCardBalanceByUserNameQuery;
 import queries.GetCardByUserNameQuery;
@@ -59,13 +60,6 @@ class OysterCardSystem {
         if (hasUserSignedIn) {
             signCardInCommand.run(userName);
         }
-
-//        try {
-//            isUserOutOfFunds = false;
-//            startJourneyCommand.run(userName);
-//        } catch (InsufficientFundsException ex) {
-//            isUserOutOfFunds = true;
-//        }
     }
 
     void userTakesTransport(String by) {
@@ -74,7 +68,13 @@ class OysterCardSystem {
 
     void userSwipesOutCardAtStation(String station) {
         journeyBuilder.destination(getStationByNameQuery.run(station));
-        finishJourneyCommand.run(userName, journeyBuilder.build());
+
+        try {
+            isUserOutOfFunds = false;
+            finishJourneyCommand.run(userName, journeyBuilder.build());
+        } catch (InsufficientFundsException ex) {
+            isUserOutOfFunds = true;
+        }
     }
 
     void assertUserBalanceIs(BigDecimal balance) {
