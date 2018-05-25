@@ -2,9 +2,9 @@ package acceptance.tests.steps;
 
 import commands.CalculateJourneyFareCommand;
 import commands.FinishJourneyCommand;
+import commands.SignCardInCommand;
 import commands.StartJourneyCommand;
 import commands.UpdateCardBalanceCommand;
-import exceptions.InsufficientFundsException;
 import models.Journey;
 import queries.GetCardBalanceByUserNameQuery;
 import queries.GetMaximumFareQuery;
@@ -44,6 +44,7 @@ class OysterCardSystem {
     private final UpdateCardBalanceCommand updateCardBalanceCommand = new UpdateCardBalanceCommand(inMemoryCardRepository);
     private final StartJourneyCommand startJourneyCommand = new StartJourneyCommand(getCardBalanceByUserNameQuery, updateCardBalanceCommand, getMaximumFareQuery);
     private final FinishJourneyCommand finishJourneyCommand = new FinishJourneyCommand(calculateJourneyFareCommand, updateCardBalanceCommand, getMaximumFareQuery);
+    private final SignCardInCommand signCardInCommand = new SignCardInCommand();
 
     void loadCardForUser(String userName, BigDecimal amount) {
         updateCardBalanceCommand.run(userName, amount);
@@ -52,13 +53,14 @@ class OysterCardSystem {
 
     void userPassInwardBarrierInStation(String station) {
         journeyBuilder.origin(getStationByNameQuery.run(station));
+        signCardInCommand.run(userName);
 
-        try {
-            isUserOutOfFunds = false;
-            startJourneyCommand.run(userName);
-        } catch (InsufficientFundsException ex) {
-            isUserOutOfFunds = true;
-        }
+//        try {
+//            isUserOutOfFunds = false;
+//            startJourneyCommand.run(userName);
+//        } catch (InsufficientFundsException ex) {
+//            isUserOutOfFunds = true;
+//        }
     }
 
     void userTakesTransport(String by) {
