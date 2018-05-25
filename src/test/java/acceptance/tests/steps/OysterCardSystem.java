@@ -44,7 +44,7 @@ class OysterCardSystem {
     private final UpdateCardBalanceCommand updateCardBalanceCommand = new UpdateCardBalanceCommand(inMemoryCardRepository);
     private final StartJourneyCommand startJourneyCommand = new StartJourneyCommand(getCardBalanceByUserNameQuery, updateCardBalanceCommand, getMaximumFareQuery);
     private final FinishJourneyCommand finishJourneyCommand = new FinishJourneyCommand(calculateJourneyFareCommand, updateCardBalanceCommand, getMaximumFareQuery);
-    private final SignCardInCommand signCardInCommand = new SignCardInCommand();
+    private final SignCardInCommand signCardInCommand = new SignCardInCommand(inMemoryCardRepository);
 
     void loadCardForUser(String userName, BigDecimal amount) {
         updateCardBalanceCommand.run(userName, amount);

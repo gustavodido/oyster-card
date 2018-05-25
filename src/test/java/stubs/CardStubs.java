@@ -9,6 +9,13 @@ public class CardStubs {
         return Card.builder()
                 .userName("Gustavo")
                 .balance(TEN)
+                .isSignedIn(false)
+                .build();
+    }
+
+    public static Card signedInGustavoCard() {
+        return  gustavoCard().toBuilder()
+                .isSignedIn(true)
                 .build();
     }
 
