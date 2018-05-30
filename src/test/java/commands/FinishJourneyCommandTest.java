@@ -1,17 +1,19 @@
 package commands;
 
-import stubs.CardStubs;
-import stubs.FareStubs;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import queries.GetMaximumFareQuery;
+
 import java.math.BigDecimal;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static stubs.CardStubs.gustavoCard;
+import static stubs.FareStubs.anyThreeZones;
+import static stubs.FareStubs.anywhereInZoneOne;
 import static stubs.JourneyStubs.holbornToEarlsCourtByTrain;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -30,15 +32,15 @@ public class FinishJourneyCommandTest {
 
     @Test
     public void finishJourney_ShouldCreditTheFareDifference() {
-        when(calculateJourneyFareCommand.run(holbornToEarlsCourtByTrain())).thenReturn(FareStubs.anywhereInZoneOne().getValue());
-        when(getMaximumFareQuery.run()).thenReturn(FareStubs.anyThreeZones());
+        when(calculateJourneyFareCommand.run(holbornToEarlsCourtByTrain())).thenReturn(anywhereInZoneOne().getValue());
+        when(getMaximumFareQuery.run()).thenReturn(anyThreeZones());
 
-        finishJourneyCommand.run(CardStubs.gustavoCard().getUserName(), holbornToEarlsCourtByTrain());
+        finishJourneyCommand.run(gustavoCard().getUserName(), holbornToEarlsCourtByTrain());
 
-        BigDecimal expectedCredit = FareStubs.anyThreeZones().getValue()
-                .subtract(FareStubs.anywhereInZoneOne().getValue());
+        BigDecimal expectedCredit = anyThreeZones().getValue()
+                .subtract(anywhereInZoneOne().getValue());
 
-        verify(updateCardBalanceCommand).run(CardStubs.gustavoCard().getUserName(), expectedCredit);
+        verify(updateCardBalanceCommand).run(gustavoCard().getUserName(), expectedCredit);
     }
 
 }
